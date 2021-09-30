@@ -4,9 +4,9 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 /*CRUD-Get*/
-router.get('/model',(req,res)=>{
-    console.log('get lista airplanemodel')
-    mysqlConnection.query('Select * from airplanemodel',(err,rows,fields)=>{
+router.get('/aerolineas',(req,res)=>{
+    console.log('Get Lista Aerolineas')
+    mysqlConnection.query('Select * from aerolinea',(err,rows,fields)=>{
         if(!err){
             res.send(rows);
         }else{
@@ -16,9 +16,9 @@ router.get('/model',(req,res)=>{
     })
 });
 /*CRUD-Get-id*/
-router.get('/model/:model',(req,res)=>{
-    console.log('get airplanemodel')
-    mysqlConnection.query('Select * from airplanemodel where model = ?',[req.params.model],(err,rows,fields)=>{
+router.get('/aerolineas/:id',(req,res)=>{
+    console.log('Get Aerolineas')
+    mysqlConnection.query('Select * from aerolinea where id_aerolinea = ?',[req.params.id],(err,rows,fields)=>{
         if(!err){
             res.send(rows);
         }else{
@@ -28,12 +28,12 @@ router.get('/model/:model',(req,res)=>{
     })
 });
 /*CRUD-Insert*/
-router.post('/model',(req,res)=>{
-    console.log('Insert airplanemodel')
+router.post('/aerolineas',(req,res)=>{
+    console.log('Insert Aerolineas')
     let emp=req.body;
     console.log(emp);
-    mysqlConnection.query('insert into airplanemodel (model, cruisingspeed, economicseats, businessseats) values (?,?,?,?)',
-    [emp.Model,emp.Cruisingspeed,emp.Economicseats,emp.Businessseats],(err,result)=>{
+    mysqlConnection.query('insert into aerolinea (nombre) values (?)',
+    [emp.nombre],(err,result)=>{
         if(!err){
             console.log(result);
             res.send('created Successfully');
@@ -45,11 +45,11 @@ router.post('/model',(req,res)=>{
 });
 
 /*CRUD-Update*/
-router.put('/model/:model',(req,res)=>{
-    console.log('Update airplanemodel')
+router.put('/aerolinea/:id',(req,res)=>{
+    console.log('Update aerolinea')
     let emp=req.body;
-    mysqlConnection.query('update airplanemodel set cruisingspeed=?, economicseats=?, businessseats=? where model=?',
-    [emp.Cruisingspeed,emp.Economicseats,emp.Businessseats,req.params.model],(err,result)=>{
+    mysqlConnection.query('update aerolinea set nombre=? where id_aerolinea=?',
+    [emp.nombre,req.params.id],(err,result)=>{
         if(!err){
             console.log(result);
             res.send('Updated Successfully');
@@ -61,9 +61,9 @@ router.put('/model/:model',(req,res)=>{
 });
 
 /*CRUD-Delete*/
-router.delete('/model/:model',(req,res)=>{
-    console.log('Delete estudiante')
-    mysqlConnection.query('delete from airplanemodel where model = ?',[req.params.model],(err,result)=>{
+router.delete('/aerolinea/:id',(req,res)=>{
+    console.log('Delete Aerolinea')
+    mysqlConnection.query('delete from aerolinea where id_aerolinea = ?',[req.params.id],(err,result)=>{
         if(!err){
             console.log(result);
             res.send('Deleted Successfully');
