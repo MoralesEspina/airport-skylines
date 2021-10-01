@@ -18,7 +18,7 @@ router.get('/persona', (req, res) => {
 //Leer por id
 router.get('/persona/:id', (req, res) => {
     console.log('get persona')
-    mysqlConnection.query('Select nombres, apellidos, tipo_doc, número_doc where persona.id_persona = ?', [req.params.id], (err, rows, fields) => {
+    mysqlConnection.query('Select * from persona where persona.id_persona = ?', [req.params.id], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
@@ -28,9 +28,9 @@ router.get('/persona/:id', (req, res) => {
 });
 
 //Leer por nombre
-router.get('/persona/: nombre', (req, res) => {
+router.get('/persona/:nombres', (req, res) => {
     console.log('get persona')
-    mysqlConnection.query('Select nombres, apellidos, tipo_doc, número_doc where persona.nombre = ?', [req.params.id], (err, rows, fields) => {
+    mysqlConnection.query('Select * from persona where persona.nombres = ?', [req.params.nombres], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
