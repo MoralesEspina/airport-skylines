@@ -3,7 +3,7 @@ const router = express.Router();
 
 const mysqlConnection = require('../configurations/db-conf');
 
-//Visualizar Rutas
+//Ver Rutas
 router.get("/ruta", (req, res) => {
     console.log("Obteniendo Lista de Rutas");
     mysqlConnection.query('Select * from ruta', (err, rows, fields) => {
