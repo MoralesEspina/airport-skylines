@@ -52,7 +52,7 @@ router.post('/estado_boleto',(req, res)=>{
 
 });
 //actualizar estado_boleto
-app.put('/estado_boleto/:id',(req, res)=>{
+router.put('/estado_boleto/:id',(req, res)=>{
     console.log('actualizar estado_boleto');
     let est= req.body;
     console.log(est);
