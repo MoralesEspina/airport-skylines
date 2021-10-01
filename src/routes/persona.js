@@ -15,10 +15,22 @@ router.get('/persona', (req, res) => {
     })
 });
 
-//Leer
+//Leer por id
 router.get('/persona/:id', (req, res) => {
     console.log('get persona')
     mysqlConnection.query('Select nombres, apellidos, tipo_doc, número_doc where persona.id_persona = ?', [req.params.id], (err, rows, fields) => {
+        if (!err) {
+            res.send(rows);
+        } else {
+            console.log(err);
+        }
+    })
+});
+
+//Leer por nombre
+router.get('/persona/: nombre', (req, res) => {
+    console.log('get persona')
+    mysqlConnection.query('Select nombres, apellidos, tipo_doc, número_doc where persona.nombre = ?', [req.params.id], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
