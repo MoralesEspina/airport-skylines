@@ -4,11 +4,11 @@ const app = express();
 app.use(express.json());
 app.set('port', process.env.PORT || 3000);
 
-app.use(require('./routes/pruebas'));
 app.use(require('./routes/persona'));
 app.use(require('./routes/usuario'));
 app.use(require('./routes/rol'));
-
+app.use(require('./routes/ruta'));
+app.use(require('./routes/aeropuerto'));
 
 
 app.listen(app.get('port'), () => {
