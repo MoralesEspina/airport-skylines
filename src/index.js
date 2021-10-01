@@ -9,6 +9,9 @@ app.use(require('./routes/usuario'));
 app.use(require('./routes/rol'));
 app.use(require('./routes/ruta'));
 app.use(require('./routes/aeropuerto'));
+app.use(require('./routes/modelo'));
+app.use(require('./routes/aerolineas'));
+app.use(require('./routes/aviones'));
 
 
 app.listen(app.get('port'), () => {
