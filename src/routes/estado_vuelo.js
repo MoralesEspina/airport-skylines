@@ -58,7 +58,7 @@ router.put('/estado_vuelo/:id',(req, res)=>{
     console.log('actualizar estado_vuelo');
     let est= req.body;
     console.log(est);
-    mysqlConnection.query('update estado_vuelo set id_estado=?, descripción=? where id_estado=?',[est.id_estado, est.descripción, req.params.id],(err, result)=>{
+    mysqlConnection.query('update estado_vuelo set descripción=? where id_estado=?',[est.descripción, req.params.id],(err, result)=>{
         if(!err){
             console.log(result);
             res.status(202).send('Actualizado Correctamente');
