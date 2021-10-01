@@ -45,7 +45,7 @@ router.post('/aerolineas',(req,res)=>{
 });
 
 /*CRUD-Update*/
-router.put('/aerolinea/:id',(req,res)=>{
+router.put('/aerolineas/:id',(req,res)=>{
     console.log('Update aerolinea')
     let emp=req.body;
     mysqlConnection.query('update aerolinea set nombre=? where id_aerolinea=?',
@@ -61,7 +61,7 @@ router.put('/aerolinea/:id',(req,res)=>{
 });
 
 /*CRUD-Delete*/
-router.delete('/aerolinea/:id',(req,res)=>{
+router.delete('/aerolineas/:id',(req,res)=>{
     console.log('Delete Aerolinea')
     mysqlConnection.query('delete from aerolinea where id_aerolinea = ?',[req.params.id],(err,result)=>{
         if(!err){

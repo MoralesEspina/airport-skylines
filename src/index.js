@@ -6,6 +6,7 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(express.json());
 
+app.use(require('./routes/pruebas'));
 app.use(require('./routes/modelo'));
 app.use(require('./routes/aerolineas'));
 app.use(require('./routes/aviones'));
