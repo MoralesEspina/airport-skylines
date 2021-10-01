@@ -9,7 +9,7 @@ router.post("/asiento", (req, res) => {
     let est = req.body;
     console.log(est);
     mysqlConnection.query('insert into asiento (id_asiento, numero, letra ) values (?,?,?)',
-        [est.numero_factura, est.id_boleto, est.costo_total], (err, result) => {
+        [est.id_asiento, est.numero, est.letra], (err, result) => {
             if (!err) {
                 console.log(result);
 
