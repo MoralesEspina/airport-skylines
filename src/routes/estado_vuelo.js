@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
 
 
 
-//lista de estado_vuelo
+//ver de estado_vuelo
 router.get("/estado_vuelo", (req, res) => {
     console.log("get lista estado de vuelo");
     mysqlConnection.query('select * from estado_vuelo', (err, rows, fields) => {

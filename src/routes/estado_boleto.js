@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
     res.send('Hola Como Estan');
 });
 
-//lista estado_boleto
+//ver estado_boleto
 router.get('/estado_boleto', (req, res) => {
     console.log('get lista estado_boleto');
     mysqlConnection.query('select * from estado_boleto', (err, rows, fields) => {
