@@ -3,7 +3,7 @@ const router = express.Router();
 
 const mysqlConnection = require('../configurations/db-conf');
 
-//Crear vuelo
+//Create vuelo
 router.post("/vuelo", (req, res) => {
     console.log("Crear vuelo ");
     let est = req.body;

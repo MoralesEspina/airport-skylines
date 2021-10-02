@@ -3,7 +3,7 @@ const router = express.Router();
 
 const mysqlConnection = require('../configurations/db-conf');
 
-//Ingreso de boleto
+//create de boleto
 router.post("/boleto", (req, res) => {
     console.log("Crear boleto ");
     let est = req.body;
