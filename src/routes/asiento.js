@@ -3,7 +3,7 @@ const router = express.Router();
 
 const mysqlConnection = require('../configurations/db-conf');
 
-//Ingreso de asientos
+//create de asientos
 router.post("/asiento", (req, res) => {
     console.log("Create asiento ");
     let est = req.body;
