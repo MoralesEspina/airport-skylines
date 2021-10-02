@@ -3,10 +3,10 @@ const router = express.Router();
 
 const mysqlConnection = require('../configurations/db-conf');
 
-//Visualizar estado_cancelacion
-router.get("/estado", (req, res) => {
-    console.log("Obteniendo Lista de estado");
-    mysqlConnection.query('Select * from estado', (err, rows, fields) => {
+//Visualizar cancelacion_boletos
+router.get("/boletos", (req, res) => {
+    console.log("Obteniendo boletos");
+    mysqlConnection.query('Select * from boletos', (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
@@ -17,10 +17,10 @@ router.get("/estado", (req, res) => {
 });
 
 
-//Ver estado_cancelacion
-router.get("/estado/:id", (req, res) => {
-    console.log("Obteniendo estado");
-    mysqlConnection.query('Select * from ruta where id_estado_cancelacion = ?', [req.params.id], (err, rows, fields) => {
+//Ver cancelacion_boletos
+router.get("/boletos/:id", (req, res) => {
+    console.log("Obteniendo boletos");
+    mysqlConnection.query('Select * from boletos where id_cancelacion_boletos = ?', [req.params.id], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
@@ -30,13 +30,13 @@ router.get("/estado/:id", (req, res) => {
     });
 });
 
-//Crear estado_cancelacion
-router.post("/estado", (req, res) => {
-    console.log("Creando estado");
+//Crear cancelacion_boletos
+router.post("/boletos", (req, res) => {
+    console.log("Creando boletos");
     let route = req.body;
 
-    mysqlConnection.query('insert into estado (id_estado_cancelacion, descripcion) values (?,?,?,?,?,?,?)',
-        [route.id_estado_cancelacion, route.descripcion], (err, result) => {
+    mysqlConnection.query('insert into boletos (id_cancelacion_boletos, id_boleto, motivo, estado) values (?,?,?,?,?,?,?)',
+        [route.id_cancelacion_boletos, route.id_boleto, route.motivo, route.estado], (err, result) => {
             if (!err) {
                 console.log(result);
                 res.status(201).send("Creado Correctamente");
@@ -47,13 +47,13 @@ router.post("/estado", (req, res) => {
         });
 });
 
-//Actualizar estado_cancelacion
-router.put("/estado/:id", (req, res) => {
-    console.log("Actualizando estado");
+//Actualizar cancelacion_boletos
+router.put("/boletos/:id", (req, res) => {
+    console.log("Actualizando boletos");
     let route = req.body;
 
-    mysqlConnection.query('update estado set descripcion = ?',
-        [route.descripcion], (err, result) => {
+    mysqlConnection.query('update boletos set motivo = ?, estado = ?',
+        [route.motivo, route.estado], (err, result) => {
             if (!err) {
                 console.log(result);
                 res.status(202).send("Actualizado");
@@ -64,10 +64,10 @@ router.put("/estado/:id", (req, res) => {
         });
 });
 
-//Eliminar estado_cancelacion
-router.delete("/estado/:id", (req, res) => {
-    console.log("Eliminando estado ");
-    mysqlConnection.query('delete from ruta where id_estado_cancelacion = ?',
+//Eliminar cancelacio_boletos
+router.delete("/boletos/:id", (req, res) => {
+    console.log("Eliminando boletos ");
+    mysqlConnection.query('delete from boletos where id_cancelacion_boletos = ?',
         [ req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);

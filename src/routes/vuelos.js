@@ -3,41 +3,24 @@ const router = express.Router();
 
 const mysqlConnection = require('../configurations/db-conf');
 
-//POST:/
-router.post("/vuelos", (req, res) => {
-    console.log("Create vuelos ");
-    let est = req.body;
-    console.log(est);
-    mysqlConnection.query('insert into vuelo (id_cancelacion_vuelos, motivo, estado, vuelo, fecha_reasignacion) values (?,?,?)',
-        [est.id_cancelacion_vuelos,est.motivo,est.estado,est.vuelo,est.fecha_reasignacion ], (err, result) => {
-            if (!err) {
-                console.log(result);
-
-                res.status(201).send("created");
-            } else {
-                console.log(err);
-                res.send('error' + err);
-            }
-        });
-});
-
-//GET:/
+//Visualizar cancelacion_vuelos
 router.get("/vuelos", (req, res) => {
-    console.log("get list of vuelos");
+    console.log("Obteniendo Lista de vuelos");
     mysqlConnection.query('Select * from vuelos', (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
             console.log(err);
-            res.send('error' + err);
+            res.send(err);
         }
     });
 });
 
-//GET:/
-router.get("/vuelo/:id_cancelacion_vuelos", (req, res) => {
-    console.log("get pago");
-    mysqlConnection.query('Select * from pago where id_cancelacion_vuelos = ?', [req.params.id_cancelacion_vuelos], (err, rows, fields) => {
+
+//Ver cancelacion_vuelos
+router.get("/vuelos/:id", (req, res) => {
+    console.log("Obteniendo vuelos");
+    mysqlConnection.query('Select * from ruta where id_cancelacion_vuelos = ?', [req.params.id], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
@@ -47,17 +30,33 @@ router.get("/vuelo/:id_cancelacion_vuelos", (req, res) => {
     });
 });
 
-//PUT:/
-router.put("/vuelos/:id_cancelacion_vuelos", (req, res) => {
-    console.log("update vuelos ");
-    let est = req.body;
-    console.log(est);
-    mysqlConnection.query('update pago set motivo = ?, estado = ?, vuelo = ?, fecha_reasignacion = ? where id_cancelacion_vuelos = ?',
-        [est.motivo,est.estado,est.vuelo,est.fecha_reasignacion], (err, result) => {
+//Crear cancelacion_vuelos
+router.post("/vuelos", (req, res) => {
+    console.log("Creando vuelos");
+    let route = req.body;
+
+    mysqlConnection.query('insert into vuelos (id_cancelacion_vuelos, motivo, estado, vuelo, fecha_reasignada) values (?,?,?,?,?,?,?)',
+        [route.id_cancelacion_vuelos, route.motivo, route.estado, route.vuelo, route.fecha_reasignada], (err, result) => {
             if (!err) {
                 console.log(result);
+                res.status(201).send("Creado Correctamente");
+            } else {
+                console.log(err);
+                res.send('Error' + err);
+            }
+        });
+});
 
-                res.status(202).send("updated");
+//Actualizar cancelacion_vuelos
+router.put("/vuelos/:id", (req, res) => {
+    console.log("Actualizando vuelos");
+    let route = req.body;
+
+    mysqlConnection.query('update vuelos set motivo = ?, estado = ?,vuelo = ?, fecha_reasignada = ?',
+        [route.motivo, route.estado, route.vuelo, route.fecha_reasignada], (err, result) => {
+            if (!err) {
+                console.log(result);
+                res.status(202).send("Actualizado");
             } else {
                 console.log(err);
                 res.send('error' + err);
@@ -65,15 +64,15 @@ router.put("/vuelos/:id_cancelacion_vuelos", (req, res) => {
         });
 });
 
-//DELETE:/
-router.delete("/vuelos/:id_cancelacion_vuelos", (req, res) => {
-    console.log("delete vuelos ");
-    mysqlConnection.query('delete from vuelo where id_cancelacion_vuelos = ?',
-        [req.params.id], (err, result) => {
+//Eliminar cancelacion_vuelos
+router.delete("/vuelos/:id", (req, res) => {
+    console.log("Eliminando vuelos ");
+    mysqlConnection.query('delete from ruta where id_cancelacion_vuelos = ?',
+        [ req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
-
-                res.status(202).send("deleted");
+                
+                res.status(202).send("Eliminado Correctamente");
             } else {
                 console.log(err);
                 res.send('error' + err);
