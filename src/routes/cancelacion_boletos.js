@@ -35,7 +35,7 @@ router.post("/cancelacion_boletos", (req, res) => {
     console.log("Creando cancelacion_boletos");
     let route = req.body;
 
-    mysqlConnection.query('insert into cancelacion_boletos (id_cancelacion_boletos, id_boleto, motivo, estado) values (?,?,?,?,?,?,?)',
+    mysqlConnection.query('insert into cancelacion_boletos (id_cancelacion_boletos, id_boleto, motivo, estado) values (?,?,?,?)',
         [route.id_cancelacion_boletos, route.id_boleto, route.motivo, route.estado], (err, result) => {
             if (!err) {
                 console.log(result);
@@ -52,7 +52,7 @@ router.put("/cancelacion_boletos/:id", (req, res) => {
     console.log("Actualizando cancelacion_boletos");
     let route = req.body;
 
-    mysqlConnection.query('update cancelacion_boletos set motivo = ?, estado = ?',
+    mysqlConnection.query('update cancelacion_boletos set  id_boleto = ?, motivo = ?, estado = ? where id_cancelacion_boletos = ?',
         [route.motivo, route.estado], (err, result) => {
             if (!err) {
                 console.log(result);
