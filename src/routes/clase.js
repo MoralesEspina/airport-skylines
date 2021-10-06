@@ -4,7 +4,7 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 //POST:/clase RR
-router.post("/clase", (req, res) => {
+router.post("/clases", (req, res) => {
     console.log("Creando clase");
     let est = req.body;
     console.log(est);
@@ -22,7 +22,7 @@ router.post("/clase", (req, res) => {
 });
 
 //GET:/clase RR
-router.get("/clase", (req, res) => {
+router.get("/clases", (req, res) => {
     console.log("Obteniendo Lista de clase");
     mysqlConnection.query('Select * from clase', (err, rows, fields) => {
         if (!err) {
@@ -35,7 +35,7 @@ router.get("/clase", (req, res) => {
 });
 
 //GET:/clase/:id RR
-router.get("/clase/:id_clase", (req, res) => {
+router.get("/clases/:id_clase", (req, res) => {
     console.log("Obteniendo clase");
     mysqlConnection.query('Select * from clase where id_clase = ?', [req.params.id_clase], (err, rows, fields) => {
         if (!err) {
@@ -48,8 +48,8 @@ router.get("/clase/:id_clase", (req, res) => {
 });
 
 //PUT:/clase/:id RR
-router.put("/clase/:id_clase", (req, res) => {
-    console.log("uActualizando clase ");
+router.put("/clases/:id_clase", (req, res) => {
+    console.log("Actualizando clase ");
     let est = req.body;
     console.log(est);
     mysqlConnection.query('update clase set tipo_clase = ?, precio = ? where id_clase = ?',
@@ -66,7 +66,7 @@ router.put("/clase/:id_clase", (req, res) => {
 });
 
 //DELETE:/clase/id RR
-router.delete("/clase/:id_clase", (req, res) => {
+router.delete("/clases/:id_clase", (req, res) => {
     console.log("Eliminando clase ");
     mysqlConnection.query('delete from clase where id_clase = ?',
         [req.params.id], (err, result) => {

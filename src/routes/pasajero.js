@@ -4,7 +4,7 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 //POST:/pasajero RR
-router.post("/pasajero", (req, res) => {
+router.post("/pasajeros", (req, res) => {
     console.log("Creando pasajero ");
     let est = req.body;
     console.log(est);
@@ -22,7 +22,7 @@ router.post("/pasajero", (req, res) => {
 });
 
 //GET:/pasajero RR
-router.get("/pasajero", (req, res) => {
+router.get("/pasajeros", (req, res) => {
     console.log("Obteniendo Lista de pasajero");
     mysqlConnection.query('Select * from pasajero', (err, rows, fields) => {
         if (!err) {
@@ -35,7 +35,7 @@ router.get("/pasajero", (req, res) => {
 });
 
 //GET:/pasajero/:id RR
-router.get("/pasajero/:id_pasajero", (req, res) => {
+router.get("/pasajeros/:id_pasajero", (req, res) => {
     console.log("Obteniendo pasajero");
     mysqlConnection.query('Select * from pasajero where id_pasajero = ?', [req.params.id_pasajero], (err, rows, fields) => {
         if (!err) {
@@ -48,7 +48,7 @@ router.get("/pasajero/:id_pasajero", (req, res) => {
 });
 
 //PUT:/pasajero/:id RR
-router.put("/pasajero/:id_pasajero", (req, res) => {
+router.put("/pasajeros/:id_pasajero", (req, res) => {
     console.log("Actualizando pasajero ");
     let est = req.body;
     console.log(est);
@@ -66,7 +66,7 @@ router.put("/pasajero/:id_pasajero", (req, res) => {
 });
 
 //DELETE:/pasajero/id RR
-router.delete("/pasajero/:id_pasajero", (req, res) => {
+router.delete("/pasajeros/:id_pasajero", (req, res) => {
     console.log("Eliminando pasajero ");
     mysqlConnection.query('delete from pasajero where id_pasajero = ?',
         [req.params.id], (err, result) => {
