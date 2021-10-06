@@ -53,7 +53,7 @@ router.put("/cancelacion_boletos/:id", (req, res) => {
     let route = req.body;
 
     mysqlConnection.query('update cancelacion_boletos set  id_boleto = ?, motivo = ?, estado = ? where id_cancelacion_boletos = ?',
-        [route.motivo, route.estado], (err, result) => {
+        [route.id_boleto, route.motivo, route.estado], (err, result) => {
             if (!err) {
                 console.log(result);
                 res.status(202).send("Actualizado");

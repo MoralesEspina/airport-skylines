@@ -35,7 +35,7 @@ router.post("/estado_cancelacion", (req, res) => {
     console.log("Creando estado_cancelacion");
     let route = req.body;
 
-    mysqlConnection.query('insert into estado_cancelacion (id_estado_cancelacion, descripcion) values (?,?)',
+    mysqlConnection.query('insert into estado_cancelacion (id_estado_cancelacion, descripción) values (?,?)',
         [route.id_estado_cancelacion, route.descripcion], (err, result) => {
             if (!err) {
                 console.log(result);
@@ -52,7 +52,7 @@ router.put("/estado_cancelacion/:id", (req, res) => {
     console.log("Actualizando estado_cancelacion");
     let route = req.body;
 
-    mysqlConnection.query('update estado_cancelacion set descripcion = ? where id_estado_cancelacion = ?',
+    mysqlConnection.query('update estado_cancelacion set descripción = ? where id_estado_cancelacion = ?',
         [route.descripcion], (err, result) => {
             if (!err) {
                 console.log(result);
@@ -67,7 +67,7 @@ router.put("/estado_cancelacion/:id", (req, res) => {
 //Eliminar estado_cancelacion
 router.delete("/estado_cancelacion/:id", (req, res) => {
     console.log("Eliminando estado_cancelacion ");
-    mysqlConnection.query('delete from ruta where id_estado_cancelacion = ?',
+    mysqlConnection.query('delete from estado_cancelacion where id_estado_cancelacion = ?',
         [ req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
