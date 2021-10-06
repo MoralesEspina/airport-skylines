@@ -5,7 +5,7 @@ const mysqlConnection = require('../configurations/db-conf');
 
 //POST:/pasajero RR
 router.post("/pasajero", (req, res) => {
-    console.log("Create pasajero ");
+    console.log("Creando pasajero ");
     let est = req.body;
     console.log(est);
     mysqlConnection.query('insert into pasajero (id_pasajero, id_persona, fecha_nacimiento, genero, nacionalidad ) values (?,?,?,?,?)',
@@ -13,7 +13,7 @@ router.post("/pasajero", (req, res) => {
             if (!err) {
                 console.log(result);
 
-                res.status(201).send("created");
+                res.status(201).send("Creado Correctamente");
             } else {
                 console.log(err);
                 res.send('error' + err);
@@ -23,7 +23,7 @@ router.post("/pasajero", (req, res) => {
 
 //GET:/pasajero RR
 router.get("/pasajero", (req, res) => {
-    console.log("get list of pasajero");
+    console.log("Obteniendo Lista de pasajero");
     mysqlConnection.query('Select * from pasajero', (err, rows, fields) => {
         if (!err) {
             res.send(rows);
@@ -36,7 +36,7 @@ router.get("/pasajero", (req, res) => {
 
 //GET:/pasajero/:id RR
 router.get("/pasajero/:id_pasajero", (req, res) => {
-    console.log("get pasajero");
+    console.log("Obteniendo pasajero");
     mysqlConnection.query('Select * from pasajero where id_pasajero = ?', [req.params.id_pasajero], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
@@ -49,7 +49,7 @@ router.get("/pasajero/:id_pasajero", (req, res) => {
 
 //PUT:/pasajero/:id RR
 router.put("/pasajero/:id_pasajero", (req, res) => {
-    console.log("update pasajero ");
+    console.log("Actualizando pasajero ");
     let est = req.body;
     console.log(est);
     mysqlConnection.query('update pasajero set id_persona = ?, fecha_nacimiento = ?, genero = ?, nacionalidad = ? where id_pasajero = ?',
@@ -57,7 +57,7 @@ router.put("/pasajero/:id_pasajero", (req, res) => {
             if (!err) {
                 console.log(result);
 
-                res.status(202).send("updated");
+                res.status(202).send("Actualizado");
             } else {
                 console.log(err);
                 res.send('error' + err);
@@ -67,13 +67,13 @@ router.put("/pasajero/:id_pasajero", (req, res) => {
 
 //DELETE:/pasajero/id RR
 router.delete("/pasajero/:id_pasajero", (req, res) => {
-    console.log("delete pasajero ");
+    console.log("Eliminando pasajero ");
     mysqlConnection.query('delete from pasajero where id_pasajero = ?',
         [req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
 
-                res.status(202).send("deleted");
+                res.status(202).send("Eliminado Correctamente");
             } else {
                 console.log(err);
                 res.send('error' + err);
