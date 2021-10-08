@@ -48,7 +48,7 @@ router.post('/estado_boletos',(req, res)=>{
 
 });
 //actualizar estado_boleto
-app.put('/estado_boletos/:id',(req, res)=>{
+router.put('/estado_boletos/:id',(req, res)=>{
     console.log('actualizando estado_boleto');
     let est= req.body;
     console.log(est);

@@ -4,8 +4,8 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 //get
-router.get('/persona', (req, res) => {
-    console.log('get persona')
+router.get('/personas', (req, res) => {
+    console.log('Obteniendo Lista de personas')
     mysqlConnection.query('Select * from persona', (err, rows, fields) => {
         if (!err) {
             res.send(rows);
@@ -16,8 +16,8 @@ router.get('/persona', (req, res) => {
 });
 
 //Leer por id
-router.get('/persona/:id', (req, res) => {
-    console.log('get persona')
+router.get('/personas/:id', (req, res) => {
+    console.log('Obteniendo persona')
     mysqlConnection.query('Select * from persona where persona.id_persona = ?', [req.params.id], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
@@ -27,8 +27,8 @@ router.get('/persona/:id', (req, res) => {
     })
 });
 
-//Leer por nombre
-router.get('/persona/:nombres', (req, res) => {
+/*Leer por nombre
+router.get('/personas/:nombres', (req, res) => {
     console.log('get persona')
     mysqlConnection.query('Select * from persona where persona.nombres = ?', [req.params.nombres], (err, rows, fields) => {
         if (!err) {
@@ -37,52 +37,54 @@ router.get('/persona/:nombres', (req, res) => {
             console.log(err);
         }
     })
-});
+});*/
 
 //Crear
-router.post('/persona', (req, res) => {
+router.post('/personas', (req, res) => {
     let per = req.body;
-    console.log('insert persona')
+    console.log('Creando persona')
     mysqlConnection.query('insert into persona (nombres, apellidos, tipo_doc, número_doc ) values (?,?,?,?)',
         [per.nombres, per.apellidos, per.tipo_doc, per.número_doc], (err, result) => {
             if (!err) {
-                res.send('Creado');
+                console.log(result);
+                res.status(201).send("Creado Correctamente");
             } else {
                 console.log(err);
-                res.send('Error');
+                res.send('Error' + err);
             }
         })
 });
 
 //Actualizar
-router.put("/persona/:id", (req, res) => {
-    console.log("update persona");
+router.put("/personas/:id", (req, res) => {
+    console.log("Atualizando persona");
     let per = req.body;
     console.log(per);
     mysqlConnection.query('update persona set nombres = ?, apellidos = ?, tipo_doc = ?, número_doc = ? where id_persona = ?',
         [per.nombres, per.apellidos, per.tipo_doc, per.número_doc, req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
+                
                 res.status(202).send("Actualizado");
             } else {
                 console.log(err);
-                res.send('Error' + err);
+                res.send('error' + err);
             }
         });
 });
 
 //Eliminar
-router.delete("/persona/:id", (req, res) => {
-    console.log("update persona ");
+router.delete("/personas/:id", (req, res) => {
+    console.log("Eliminando persona ");
     mysqlConnection.query('delete from persona where persona.id_persona = ?',
         [req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
-
-                res.status(202).send("Eliminado");
+                
+                res.status(202).send("Eliminado Correctamente");
             } else {
                 console.log(err);
-                res.send('Error' + err);
+                res.send('error' + err);
             }
         });
 });
