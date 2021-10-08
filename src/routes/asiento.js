@@ -4,8 +4,8 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 //create de asientos
-router.post("/asiento", (req, res) => {
-    console.log("Create asiento ");
+router.post("/asientos", (req, res) => {
+    console.log("Creando Asiento");
     let est = req.body;
     console.log(est);
     mysqlConnection.query('insert into asiento (id_asiento, numero, letra ) values (?,?,?)',
@@ -13,7 +13,7 @@ router.post("/asiento", (req, res) => {
             if (!err) {
                 console.log(result);
 
-                res.status(201).send("creado");
+                res.status(201).send("Asiento Creado Correctamente");
             } else {
                 console.log(err);
                 res.send('error' + err);
@@ -22,8 +22,8 @@ router.post("/asiento", (req, res) => {
 });
 
 //Obtención tabla asiento
-router.get("/asiento", (req, res) => {
-    console.log("obtener lista asiento");
+router.get("/asientos", (req, res) => {
+    console.log("Obteniendo Lista Asiento");
     mysqlConnection.query('Select * from asiento', (err, rows, fields) => {
         if (!err) {
             res.send(rows);
@@ -35,8 +35,8 @@ router.get("/asiento", (req, res) => {
 });
 
 //Obtención de asiento por id
-router.get("/asiento/:id_asiento", (req, res) => {
-    console.log("obtener asiento");
+router.get("/asientos/:id_asiento", (req, res) => {
+    console.log("Obteniendo Asiento");
     mysqlConnection.query('Select * from asiento where id_asiento = ?', [req.params.id_asiento], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
@@ -48,8 +48,8 @@ router.get("/asiento/:id_asiento", (req, res) => {
 });
 
 //Actualización de asiento
-router.put("/asiento/:id_asiento", (req, res) => {
-    console.log("actualización de asiento");
+router.put("/asientos/:id_asiento", (req, res) => {
+    console.log("Actualizando Asiento");
     let est = req.body;
     console.log(est);
     mysqlConnection.query('update asiento set numero = ?, letra = ? where id_asiento = ?',
@@ -57,7 +57,7 @@ router.put("/asiento/:id_asiento", (req, res) => {
             if (!err) {
                 console.log(result);
 
-                res.status(202).send("actualizado");
+                res.status(202).send("Asiento Actualizado Correctamente");
             } else {
                 console.log(err);
                 res.send('error' + err);
@@ -66,14 +66,14 @@ router.put("/asiento/:id_asiento", (req, res) => {
 });
 
 // Eliminación de asiento
-router.delete("/asiento/:id_asiento", (req, res) => {
-    console.log("eliminación asiento ");
+router.delete("/asientos/:id_asiento", (req, res) => {
+    console.log("Eliminando Asiento");
     mysqlConnection.query('delete from asiento where id_asiento = ?',
         [req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
 
-                res.status(202).send("eliminado");
+                res.status(202).send("Asiento Eliminado Correctamente");
             } else {
                 console.log(err);
                 res.send('error' + err);
