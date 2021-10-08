@@ -4,7 +4,7 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 //Visualizar estado_cancelacion
-router.get("/estado_cancelacion", (req, res) => {
+router.get("/estado_cancelaciones", (req, res) => {
     console.log("Obteniendo Lista de estado_cancelacion");
     mysqlConnection.query('Select * from estado', (err, rows, fields) => {
         if (!err) {
@@ -18,7 +18,7 @@ router.get("/estado_cancelacion", (req, res) => {
 
 
 //Ver estado_cancelacion
-router.get("/estado_cancelacion/:id", (req, res) => {
+router.get("/estado_cancelaciones/:id", (req, res) => {
     console.log("Obteniendo estado_cancelacion");
     mysqlConnection.query('Select * from ruta where id_estado_cancelacion = ?', [req.params.id], (err, rows, fields) => {
         if (!err) {
@@ -31,7 +31,7 @@ router.get("/estado_cancelacion/:id", (req, res) => {
 });
 
 //Crear estado_cancelacion
-router.post("/estado_cancelacion", (req, res) => {
+router.post("/estado_cancelaciones", (req, res) => {
     console.log("Creando estado_cancelacion");
     let route = req.body;
 
@@ -48,7 +48,7 @@ router.post("/estado_cancelacion", (req, res) => {
 });
 
 //Actualizar estado_cancelacion
-router.put("/estado_cancelacion/:id", (req, res) => {
+router.put("/estado_cancelaciones/:id", (req, res) => {
     console.log("Actualizando estado_cancelacion");
     let route = req.body;
 
@@ -65,7 +65,7 @@ router.put("/estado_cancelacion/:id", (req, res) => {
 });
 
 //Eliminar estado_cancelacion
-router.delete("/estado_cancelacion/:id", (req, res) => {
+router.delete("/estado_cancelaciones/:id", (req, res) => {
     console.log("Eliminando estado_cancelacion ");
     mysqlConnection.query('delete from estado_cancelacion where id_estado_cancelacion = ?',
         [ req.params.id], (err, result) => {
