@@ -4,7 +4,7 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 //Visualizar Aeropuertos
-router.get("/aeropuerto", (req, res) => {
+router.get("/aeropuertos", (req, res) => {
     console.log("Obteniendo Lista de Aeropuertos");
     mysqlConnection.query('Select * from aeropuerto', (err, rows, fields) => {
         if (!err) {
@@ -18,7 +18,7 @@ router.get("/aeropuerto", (req, res) => {
 
 
 //Ver Aeropuerto en Especifico
-router.get("/aeropuerto/:id", (req, res) => {
+router.get("/aeropuertos/:id", (req, res) => {
     console.log("Obteniendo Aeropuerto");
     mysqlConnection.query('Select * from aeropuerto where iataCode = ?', [req.params.id], (err, rows, fields) => {
         if (!err) {
@@ -31,7 +31,7 @@ router.get("/aeropuerto/:id", (req, res) => {
 });
 
 //Crear Aeropuerto
-router.post("/aeropuerto", (req, res) => {
+router.post("/aeropuertos", (req, res) => {
     console.log("Creando Aeropuerto");
     let air = req.body;
 
@@ -48,7 +48,7 @@ router.post("/aeropuerto", (req, res) => {
 });
 
 //Actualizar Aeropuerto
-router.put("/aeropuerto/:id", (req, res) => {
+router.put("/aeropuertos/:id", (req, res) => {
     console.log("Actualizando Aeropuerto");
     let air = req.body;
     
@@ -66,7 +66,7 @@ router.put("/aeropuerto/:id", (req, res) => {
 });
 
 //Eliminar Aeropuerto
-router.delete("/aeropuerto/:id", (req, res) => {
+router.delete("/aeropuertos/:id", (req, res) => {
     console.log("Eliminando Aeropuerto");
     mysqlConnection.query('delete from aeropuerto where iataCode = ?',
         [ req.params.id], (err, result) => {

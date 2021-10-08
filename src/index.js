@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
+var cors = require('cors')
 
 app.use(express.json());
 app.set('port', process.env.PORT || 3000);
 
+app.use(cors());
 app.use(require('./routes/aerolineas'));
 app.use(require('./routes/aeropuerto'));
 app.use(require('./routes/asiento'));
@@ -28,5 +30,5 @@ app.use(require('./routes/boleto'));
 app.use(require('./routes/vuelo'));
 
 app.listen(app.get('port'), () => {
-    console.log(`Server on port ${app.get('port')}`);
+    console.log(`Server en puerto ${app.get('port')}`);
 });

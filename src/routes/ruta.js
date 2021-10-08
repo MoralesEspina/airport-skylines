@@ -4,7 +4,7 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 //Ver Rutas
-router.get("/ruta", (req, res) => {
+router.get("/rutas", (req, res) => {
     console.log("Obteniendo Lista de Rutas");
     mysqlConnection.query('Select * from ruta', (err, rows, fields) => {
         if (!err) {
@@ -18,7 +18,7 @@ router.get("/ruta", (req, res) => {
 
 
 //Ver Ruta en Especifico
-router.get("/ruta/:id", (req, res) => {
+router.get("/rutas/:id", (req, res) => {
     console.log("Obteniendo Ruta");
     mysqlConnection.query('Select * from ruta where id_ruta = ?', [req.params.id], (err, rows, fields) => {
         if (!err) {
@@ -31,7 +31,7 @@ router.get("/ruta/:id", (req, res) => {
 });
 
 //Crear Ruta
-router.post("/ruta", (req, res) => {
+router.post("/rutas", (req, res) => {
     console.log("Creando Rutas");
     let route = req.body;
 
@@ -48,7 +48,7 @@ router.post("/ruta", (req, res) => {
 });
 
 //Actualizar Ruta
-router.put("/ruta/:id", (req, res) => {
+router.put("/rutas/:id", (req, res) => {
     console.log("Actualizando Rutas");
     let route = req.body;
 
@@ -65,7 +65,7 @@ router.put("/ruta/:id", (req, res) => {
 });
 
 //Eliminar Ruta
-router.delete("/ruta/:id", (req, res) => {
+router.delete("/rutas/:id", (req, res) => {
     console.log("Eliminando Rutas ");
     mysqlConnection.query('delete from ruta where id_ruta = ?',
         [ req.params.id], (err, result) => {
