@@ -4,13 +4,9 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 
-router.get("/", (req, res) => {
-    res.send('Hola Como Estan');
-});
-
 // ver estado_avion
-router.get('/estado_avion', (req, res) => {
-    console.log('get lista estado_avion');
+router.get('/estado_aviones', (req, res) => {
+    console.log('obteniendo lista estado_avion');
     mysqlConnection.query('Select * from estado_avion', (err, rows, fields) => {
         if (!err) {
             res.send(rows);
@@ -20,9 +16,9 @@ router.get('/estado_avion', (req, res) => {
         }
         })
     });
-// estado_avion por ID
-router.get('/estado_avion/:id',(req, res)=>{
-    console.log('get estado_avion id');
+// estado_avion por ID 
+router.get('/estado_aviones/:id',(req, res)=>{
+    console.log('obteniedo estado_avion id');
     mysqlConnection.query('select * from estado_avion where id_estado_avion=?',[req.params.id],(err, rows, fields)=>{
         if(!err){
             res.send(rows);
@@ -35,8 +31,8 @@ router.get('/estado_avion/:id',(req, res)=>{
 
 });
 // crear estado_avion
-router.post('/estado_avion',(req, res)=>{
-    console.log('crear estado_avion');
+router.post('/estado_aviones',(req, res)=>{
+    console.log('creando estado_avion');
     let est= req.body;
     mysqlConnection.query('insert into estado_avion (id_estado_avion, descripcion) values (?,?)',[est.id_estado_avion, est.descripcion],(err, result)=>{
         if(!err){
@@ -51,8 +47,8 @@ router.post('/estado_avion',(req, res)=>{
 
 });
 //actualizar estado_avion
-router.put('/estado_avion/:id',(req, res)=>{
-    console.log('actualizar estado_avion');
+router.put('/estado_aviones/:id',(req, res)=>{
+    console.log('actualizando estado_avion');
     let est= req.body;
     console.log(est);
     mysqlConnection.query('update estado_avion set descripcion=? where id_estado_avion=?',[ est.descripcion, req.params.id],(err, result)=>{
@@ -68,8 +64,8 @@ router.put('/estado_avion/:id',(req, res)=>{
 
 });
 //eliminar estado_avion
-router.delete('/estado_avion/:id',(req, res)=>{
-    console.log('delete estado_avion');
+router.delete('/estado_aviones/:id',(req, res)=>{
+    console.log('eliminando estado_avion');
     mysqlConnection.query('delete from estado_avion where id_estado_avion=?',[req.params.id],(err, result)=>{
         if(!err){
             console.log(result);

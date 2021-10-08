@@ -4,13 +4,9 @@ const router = express.Router();
 const mysqlConnection = require('../configurations/db-conf');
 
 
-router.get("/", (req, res) => {
-    res.send('Hola Como Estan');
-});
-
-//ver estado_boleto
-router.get('/estado_boleto', (req, res) => {
-    console.log('get lista estado_boleto');
+//lista estado_boleto
+router.get('/estado_boletos', (req, res) => {
+    console.log('obteniendo lista estado_boleto');
     mysqlConnection.query('select * from estado_boleto', (err, rows, fields) => {
         if (!err) {
             res.send(rows);
@@ -23,7 +19,7 @@ router.get('/estado_boleto', (req, res) => {
 
 // lista ID estado_boleto
 router.get('/estado_boleto/:id',(req, res)=>{
-    console.log('get estado_boleto');
+    console.log('obteniendo id estado_boleto');
     mysqlConnection.query('select * from estado_boleto where idestado_boleto=?',[req.params.id],(err, rows, fields)=>{
         if(!err){
             res.send(rows);
@@ -36,10 +32,10 @@ router.get('/estado_boleto/:id',(req, res)=>{
 
 });
 // crear estado_boleto
-router.post('/estado_boleto',(req, res)=>{
-    console.log('crear estado_boleto');
+router.post('/estado_boletos',(req, res)=>{
+    console.log('creando estado_boleto');
     let est= req.body;
-    mysqlConnection.query('insert into estado_boleto (descripción) values (?)',[est.descripción],(err, result)=>{
+    mysqlConnection.query('insert into estado_boleto (idestado_boleto, descripción) values (?,?)',[est.idestado_boleto, est.descripción],(err, result)=>{
         if(!err){
             console.log(result);
             res.status(201).send('Creado Correctamente');
@@ -52,11 +48,11 @@ router.post('/estado_boleto',(req, res)=>{
 
 });
 //actualizar estado_boleto
-router.put('/estado_boleto/:id',(req, res)=>{
-    console.log('actualizar estado_boleto');
+app.put('/estado_boletos/:id',(req, res)=>{
+    console.log('actualizando estado_boleto');
     let est= req.body;
     console.log(est);
-    mysqlConnection.query('update estado_boleto set descripción=? where idestado_boleto =?',[est.descripción, req.params.id],(err, result)=>{
+    mysqlConnection.query('update estado_boleto set idestado_boleto=?, descripcion=? where id=?',[est.idestado_boleto, est.descripción, req.params.id],(err, result)=>{
         if(!err){
             console.log(result);
             res.status(202).send('Actualizado Correctamente');
@@ -69,8 +65,8 @@ router.put('/estado_boleto/:id',(req, res)=>{
 
 });
 //eliminar estado_boleto
-router.delete('/estado_boleto/:id',(req, res)=>{
-    console.log('delete estado_boleto');
+router.delete('/estado_boletos/:id',(req, res)=>{
+    console.log('eliminando estado_boleto');
     mysqlConnection.query('delete from estado_boleto where idestado_boleto=?',[req.params.id],(err, result)=>{
         if(!err){
             console.log(result);
