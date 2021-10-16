@@ -22,12 +22,11 @@ app.use(require('./routes/persona'));
 app.use(require('./routes/rol'));
 app.use(require('./routes/ruta'));
 app.use(require('./routes/usuario'));
-app.use(require('./routes/estado_avion'));
-app.use(require('./routes/estado_boleto'));
-app.use(require('./routes/estado_vuelo'));
-app.use(require('./routes/asiento'));
-app.use(require('./routes/boleto'));
 app.use(require('./routes/vuelo'));
+app.use(require('./routes/cancelacion_boletos'));
+app.use(require('./routes/cancelacion_vuelos'));
+app.use(require('./routes/estado_cancelacion'));
+
 
 app.listen(app.get('port'), () => {
     console.log(`Server en puerto ${app.get('port')}`);
