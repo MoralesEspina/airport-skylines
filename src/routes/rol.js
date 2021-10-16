@@ -18,7 +18,7 @@ router.get('/roles', (req, res) => {
 //Leer
 router.get('/roles/:id', (req, res) => {
     console.log('Obteniendo rol')
-    mysqlConnection.query('Select descripción where rol.id_rol = ?', [req.params.id], (err, rows, fields) => {
+    mysqlConnection.query('Select descripcion where rol.id_rol = ?', [req.params.id], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
@@ -31,8 +31,8 @@ router.get('/roles/:id', (req, res) => {
 router.post('/roles', (req, res) => {
     let usu = req.body;
     console.log('Creando rol')
-    mysqlConnection.query('insert into rol (descripción) values (?)',
-        [usu.descripción], (err, result) => {
+    mysqlConnection.query('insert into rol (descripcion) values (?)',
+        [usu.descripcion], (err, result) => {
             if (!err) {
                 console.log(result);
                 res.status(201).send("Creado Correctamente");
@@ -48,8 +48,8 @@ router.put("/roles/:id", (req, res) => {
     console.log("Actualizando rol");
     let usu = req.body;
     console.log(usu);
-    mysqlConnection.query('update rol set descripción = ? where id_rol = ?',
-        [usu.descripción, req.params.id], (err, result) => {
+    mysqlConnection.query('update rol set descripcion = ? where id_rol = ?',
+        [usu.descripcion, req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
                 

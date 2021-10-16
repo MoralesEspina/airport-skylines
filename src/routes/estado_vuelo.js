@@ -35,7 +35,7 @@ router.get("/estado_vuelos/:id",(req, res)=>{
 router.post('/estado_vuelos',(req, res)=>{
     console.log('creando estado_vuelo');
     let est= req.body;
-    mysqlConnection.query('insert into estado_vuelo (id_estado, descripción) values (?,?)',[est.id_estado, est.descripción],(err, result)=>{
+    mysqlConnection.query('insert into estado_vuelo (id_estado, descripcion) values (?,?)',[est.id_estado, est.descripcion],(err, result)=>{
         if(!err){
             console.log(result);
             res.status(201).send('Creado Correctamente');
@@ -52,7 +52,7 @@ router.put('/estado_vuelos/:id',(req, res)=>{
     console.log('actualizando estado_vuelo');
     let est= req.body;
     console.log(est);
-    mysqlConnection.query('update estado_vuelo set id_estado=?, descripción=? where id_estado=?',[est.id_estado, est.descripción, req.params.id],(err, result)=>{
+    mysqlConnection.query('update estado_vuelo set id_estado=?, descripcion=? where id_estado=?',[est.id_estado, est.descripcion, req.params.id],(err, result)=>{
         if(!err){
             console.log(result);
             res.status(202).send('Actualizado Correctamente');
