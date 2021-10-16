@@ -7,11 +7,11 @@ const mysqlConnection = require('../configurations/db-conf');
 router.get("/cancelacion_vuelos", (req, res) => {
     console.log("Obteniendo Lista de cancelacion_vuelos");
     mysqlConnection.query('Select * from cancelacion_vuelos', (err, rows, fields) => {
-        if (!err) {
+        if(!err){
             res.send(rows);
-        } else {
+        }else{
             console.log(err);
-            res.send(err);
+            res.send('Error');
         }
     });
 });
@@ -21,11 +21,11 @@ router.get("/cancelacion_vuelos", (req, res) => {
 router.get("/cancelacion_vuelos/:id", (req, res) => {
     console.log("Obteniendo cancelacion_vuelos");
     mysqlConnection.query('Select * from ruta where id_cancelacion_vuelos = ?', [req.params.id], (err, rows, fields) => {
-        if (!err) {
+        if(!err){
             res.send(rows);
-        } else {
+        }else{
             console.log(err);
-            res.send('error' + err);
+            res.send('Error');
         }
     });
 });
@@ -53,7 +53,7 @@ router.put("/cancelacion_vuelos/:id", (req, res) => {
     let route = req.body;
 
     mysqlConnection.query('update cancelacion_vuelos set motivo = ?, estado = ?,vuelo = ?, fecha_reasignada = ? where id_cancelacion_vuelos = ?',
-        [route.motivo, route.estado, route.vuelo, route.fecha_reasignada], (err, result) => {
+        [route.motivo, route.estado, route.vuelo, route.fecha_reasignada,req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
                 res.status(202).send("Actualizado");

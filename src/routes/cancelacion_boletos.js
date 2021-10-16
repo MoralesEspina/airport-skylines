@@ -7,11 +7,11 @@ const mysqlConnection = require('../configurations/db-conf');
 router.get("/cancelacion_boletos", (req, res) => {
     console.log("Obteniendo cancelacion_boletos");
     mysqlConnection.query('Select * from cancelacion_boletos', (err, rows, fields) => {
-        if (!err) {
+        if(!err){
             res.send(rows);
-        } else {
+        }else{
             console.log(err);
-            res.send(err);
+            res.send('Error');
         }
     });
 });
@@ -21,11 +21,11 @@ router.get("/cancelacion_boletos", (req, res) => {
 router.get("/cancelacion_boletos/:id", (req, res) => {
     console.log("Obteniendo cancelacion_boletos");
     mysqlConnection.query('Select * from boletos where id_cancelacion_boletos = ?', [req.params.id], (err, rows, fields) => {
-        if (!err) {
+        if(!err){
             res.send(rows);
-        } else {
+        }else{
             console.log(err);
-            res.send('error' + err);
+            res.send('Error');
         }
     });
 });
@@ -37,12 +37,12 @@ router.post("/cancelacion_boletos", (req, res) => {
 
     mysqlConnection.query('insert into cancelacion_boletos (id_cancelacion_boletos, id_boleto, motivo, estado) values (?,?,?,?)',
         [route.id_cancelacion_boletos, route.id_boleto, route.motivo, route.estado], (err, result) => {
-            if (!err) {
+            if(!err){
                 console.log(result);
                 res.status(201).send("Creado Correctamente");
-            } else {
+            }else{
                 console.log(err);
-                res.send('Error' + err);
+                res.send('Error'+err);
             }
         });
 });
@@ -53,7 +53,7 @@ router.put("/cancelacion_boletos/:id", (req, res) => {
     let route = req.body;
 
     mysqlConnection.query('update cancelacion_boletos set  id_boleto = ?, motivo = ?, estado = ? where id_cancelacion_boletos = ?',
-        [route.id_boleto, route.motivo, route.estado], (err, result) => {
+        [route.id_boleto, route.motivo, route.estado,req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
                 res.status(202).send("Actualizado");

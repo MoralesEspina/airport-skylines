@@ -6,12 +6,12 @@ const mysqlConnection = require('../configurations/db-conf');
 //Visualizar estado_cancelacion
 router.get("/estado_cancelaciones", (req, res) => {
     console.log("Obteniendo Lista de estado_cancelacion");
-    mysqlConnection.query('Select * from estado', (err, rows, fields) => {
-        if (!err) {
+    mysqlConnection.query('Select * from estado_cancelacion', (err, rows, fields) => {
+        if(!err){
             res.send(rows);
-        } else {
+        }else{
             console.log(err);
-            res.send(err);
+            res.send('Error');
         }
     });
 });
@@ -20,12 +20,12 @@ router.get("/estado_cancelaciones", (req, res) => {
 //Ver estado_cancelacion
 router.get("/estado_cancelaciones/:id", (req, res) => {
     console.log("Obteniendo estado_cancelacion");
-    mysqlConnection.query('Select * from ruta where id_estado_cancelacion = ?', [req.params.id], (err, rows, fields) => {
-        if (!err) {
+    mysqlConnection.query('Select * from estado_cancelacion where id_estado_cancelacion = ?', [req.params.id], (err, rows, fields) => {
+        if(!err){
             res.send(rows);
-        } else {
+        }else{
             console.log(err);
-            res.send('error' + err);
+            res.send('Error');
         }
     });
 });
@@ -35,7 +35,7 @@ router.post("/estado_cancelaciones", (req, res) => {
     console.log("Creando estado_cancelacion");
     let route = req.body;
 
-    mysqlConnection.query('insert into estado_cancelacion (id_estado_cancelacion, descripción) values (?,?)',
+    mysqlConnection.query('insert into estado_cancelacion (id_estado_cancelacion, descripcion) values (?,?)',
         [route.id_estado_cancelacion, route.descripcion], (err, result) => {
             if (!err) {
                 console.log(result);
@@ -51,9 +51,8 @@ router.post("/estado_cancelaciones", (req, res) => {
 router.put("/estado_cancelaciones/:id", (req, res) => {
     console.log("Actualizando estado_cancelacion");
     let route = req.body;
-
-    mysqlConnection.query('update estado_cancelacion set descripción = ? where id_estado_cancelacion = ?',
-        [route.descripcion], (err, result) => {
+    mysqlConnection.query('update estado_cancelacion set descripcion = ? where id_estado_cancelacion = ?',
+        [route.descripcion,req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
                 res.status(202).send("Actualizado");
