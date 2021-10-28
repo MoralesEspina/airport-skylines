@@ -31,8 +31,8 @@ router.get('/usuarios/:id', (req, res) => {
 router.post('/usuarios', (req, res) => {
     let usu = req.body;
     console.log('Creando usuario')
-    mysqlConnection.query('insert into usuario (id_persona, rol, correo, contraseña, fechaCreacion) values (?,?,?,?,?)',
-        [usu.id_persona, usu.rol, usu.correo, usu.contraseña, usu.fechaCreacion], (err, result) => {
+    mysqlConnection.query('insert into usuario (id_persona, rol, userName, password, fechaCreacion) values (?,?,?,?,CURDATE())',
+        [usu.id_persona, usu.rol, usu.userName, usu.password], (err, result) => {
             if (!err) {
                 res.send('Creado');
             } else {
@@ -47,8 +47,8 @@ router.put("/usuarios/:id", (req, res) => {
     console.log("Actualizando usuario");
     let usu = req.body;
     console.log(usu);
-    mysqlConnection.query('update usuario set id_persona = ?, rol = ?, correo = ?, contraseña = ?, fechaCreacion = ? where id_usuario = ?',
-        [usu.id_persona, usu.rol, usu.correo, usu.contraseña, usu.fechaCreacion, req.params.id], (err, result) => {
+    mysqlConnection.query('update usuario set id_persona = ?, rol = ?, userName = ?, password = ?, fechaCreacion = ? where id_usuario = ?',
+        [usu.id_persona, usu.rol, usu.correo, usu.userName, usu.password, req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
                 res.status(202).send("Actualizado");

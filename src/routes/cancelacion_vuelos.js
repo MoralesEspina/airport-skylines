@@ -30,6 +30,8 @@ router.get("/cancelacion_vuelos/:id", (req, res) => {
     });
 });
 
+
+
 //Crear cancelacion_vuelos
 router.post("/cancelacion_vuelos", (req, res) => {
     console.log("Creando cancelacion_vuelos");
