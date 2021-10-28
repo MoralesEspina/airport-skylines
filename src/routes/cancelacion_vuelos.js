@@ -20,7 +20,7 @@ router.get("/cancelacion_vuelos", (req, res) => {
 //Ver cancelacion_vuelos
 router.get("/cancelacion_vuelos/:id", (req, res) => {
     console.log("Obteniendo cancelacion_vuelos");
-    mysqlConnection.query('Select * from ruta where id_cancelacion_vuelos = ?', [req.params.id], (err, rows, fields) => {
+    mysqlConnection.query('Select * from cancelacion_vuelos where id_cancelacion_vuelos = ?', [req.params.id], (err, rows, fields) => {
         if(!err){
             res.send(rows);
         }else{
