@@ -89,5 +89,17 @@ router.delete("/personas/:id", (req, res) => {
         });
 });
 
+router.get('/idpersona', (req, res) => {
+    let per = req.body;
+    console.log('Obteniendo Lista de personas')
+    mysqlConnection.query('Select id_persona from persona where numero_doc = ?', [per.numero_doc], (err, rows, fields) => {
+        if (!err) {
+            res.send(rows);
+        } else {
+            console.log(err);
+        }
+    })
+});
+
 
 module.exports = router;
