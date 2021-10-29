@@ -62,6 +62,7 @@ router.put("/cancelacion_boletos/:id", (req, res) => {
             }
         });
 });
+
 //Actualizar cancelacion_boletos que actualiza la vuelo asignado
 router.put("/cancelacion_boletoss/:id", (req, res) => {
     console.log("Actualizando cancelacion_boletos");
