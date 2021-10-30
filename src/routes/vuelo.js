@@ -81,4 +81,21 @@ router.delete("/vuelos/:id_vuelo", (req, res) => {
         });
 });
 
+router.post("/vuelosruta", (req, res) => {
+    console.log("Obteniendo Vuelo Especifico");
+    let vue = req.body;
+    console.log(vue);
+    mysqlConnection.query('Select id_vuelo from vuelo where id_ruta = ? and id_avion = ? and fecha_salida = ? ',
+        [vue.id_ruta, vue.id_avion, vue.fecha_salida], (err,rows, fields) => {
+            if (!err) {
+                res.status(201).send(rows);
+            } else {
+                console.log(err);
+                res.send('error' + err);
+            }
+        });
+});
+
+
+
 module.exports = router;

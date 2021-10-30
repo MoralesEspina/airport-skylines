@@ -84,7 +84,7 @@ router.post("/disponibilidad", (req, res) => {
     let ar = req.body;
     console.log("Rutas");
     console.log(ar);
-    mysqlConnection.query('select aerolinea.nombre, ruta.origen, ruta.destino, ruta.distancia_viaje, ruta.tiempo_viaje ,ruta.precio_base ,vuelo.fecha_salida, estado_vuelo.descripcion from vuelo join ruta  join avion join aerolinea  join estado_vuelo  where ruta.origen = ? and ruta.destino = ? and ruta.id_ruta = vuelo.id_ruta and avion.id_avion = vuelo.id_avion and aerolinea.id_aerolinea = avion.aerolinea and vuelo.fecha_salida = ? and estado_vuelo.id_estado = avion.estado', 
+    mysqlConnection.query('select aerolinea.nombre, ruta.origen, ruta.destino, ruta.distancia_viaje, ruta.tiempo_viaje ,ruta.precio_base ,vuelo.fecha_salida, estado_vuelo.descripcion, ruta.id_ruta, avion.id_avion from vuelo join ruta  join avion join aerolinea  join estado_vuelo  where ruta.origen = ? and ruta.destino = ? and ruta.id_ruta = vuelo.id_ruta and avion.id_avion = vuelo.id_avion and aerolinea.id_aerolinea = avion.aerolinea and vuelo.fecha_salida = ? and estado_vuelo.id_estado = avion.estado', 
     [ar.origen, ar.destino, ar.fecha_salida ],(err, rows, fields) => {
         if (!err) {
             res.send(rows);
