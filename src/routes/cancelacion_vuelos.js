@@ -20,7 +20,7 @@ router.get("/cancelacion_vuelos", (req, res) => {
 //Ver cancelacion_vuelos
 router.get("/cancelacion_vuelos/:id", (req, res) => {
     console.log("Obteniendo cancelacion_vuelos");
-    mysqlConnection.query('Select * from ruta where id_cancelacion_vuelos = ?', [req.params.id], (err, rows, fields) => {
+    mysqlConnection.query('Select * from cancelacion_vuelos where id_cancelacion_vuelos = ?', [req.params.id], (err, rows, fields) => {
         if(!err){
             res.send(rows);
         }else{
@@ -29,6 +29,8 @@ router.get("/cancelacion_vuelos/:id", (req, res) => {
         }
     });
 });
+
+
 
 //Crear cancelacion_vuelos
 router.post("/cancelacion_vuelos", (req, res) => {
@@ -64,10 +66,26 @@ router.put("/cancelacion_vuelos/:id", (req, res) => {
         });
 });
 
+//Actualizar cancelacion_vuelos que actualiza la fecha de vuelo
+router.put("/cancelacion_vueloss/:id_vuelo", (req, res) => {
+    console.log("Actualizando fecha vuelos");
+    let route = req.body;
+    mysqlConnection.query('update vuelo set fecha_salida = ? where id_vuelo = ?',
+    [route.fecha_salida, req.params.id_vuelo], (err, result) => {
+            if (!err) {
+                console.log(result);
+                res.status(202).send("Actualizado");
+            } else {
+                console.log(err);
+                res.send('error' + err);
+            }
+        });
+});
+
 //Eliminar cancelacion_vuelos
-router.delete("/cancelacion_vuelos/:id", (req, res) => {
+router.delete("/cancelacion_vuelo/:id", (req, res) => {
     console.log("Eliminando cancelacion_vuelos ");
-    mysqlConnection.query('delete from ruta where id_cancelacion_vuelos = ?',
+    mysqlConnection.query('delete from cancelacion_vuelos where id_cancelacion_vuelos = ?',
         [ req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);

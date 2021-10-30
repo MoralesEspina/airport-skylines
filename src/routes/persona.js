@@ -43,8 +43,8 @@ router.get('/personas/:nombres', (req, res) => {
 router.post('/personas', (req, res) => {
     let per = req.body;
     console.log('Creando persona')
-    mysqlConnection.query('insert into persona (nombres, apellidos, tipo_doc, número_doc ) values (?,?,?,?)',
-        [per.nombres, per.apellidos, per.tipo_doc, per.número_doc], (err, result) => {
+    mysqlConnection.query('insert into persona (nombres, apellidos, tipo_doc, numero_doc ) values (?,?,?,?)',
+        [per.nombres, per.apellidos, per.tipo_doc, per.numero_doc], (err, result) => {
             if (!err) {
                 console.log(result);
                 res.status(201).send("Creado Correctamente");
@@ -60,8 +60,8 @@ router.put("/personas/:id", (req, res) => {
     console.log("Atualizando persona");
     let per = req.body;
     console.log(per);
-    mysqlConnection.query('update persona set nombres = ?, apellidos = ?, tipo_doc = ?, número_doc = ? where id_persona = ?',
-        [per.nombres, per.apellidos, per.tipo_doc, per.número_doc, req.params.id], (err, result) => {
+    mysqlConnection.query('update persona set nombres = ?, apellidos = ?, tipo_doc = ?, numero_doc = ? where id_persona = ?',
+        [per.nombres, per.apellidos, per.tipo_doc, per.numero_doc, req.params.id], (err, result) => {
             if (!err) {
                 console.log(result);
                 
@@ -87,6 +87,18 @@ router.delete("/personas/:id", (req, res) => {
                 res.send('error' + err);
             }
         });
+});
+
+router.post('/idpersona', (req, res) => {
+    let per = req.body;
+    console.log(req.body)
+    mysqlConnection.query('Select id_persona from persona where numero_doc = ?', [per.numero_doc], (err, rows, fields) => {
+        if (!err) {
+            res.send(rows);
+        } else {
+            console.log(err);
+        }
+    })
 });
 
 
