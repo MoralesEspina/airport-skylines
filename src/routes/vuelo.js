@@ -22,9 +22,12 @@ router.post("/vuelos", (req, res) => {
 });
 
 //Obtener vuelo
-router.get("/vuelos", (req, res) => {
+router.post("/vuelosruta", (req, res) => {
+    let vue = req.body;
+    console.log(vue);
     console.log("Obteniendo Lista Vuelo");
-    mysqlConnection.query('select v.id_vuelo, v.id_avion, r.id_ruta, r.origen, r.destino, r.precio_base, r.distancia_viaje, r.tiempo_viaje, r.fecha_creacion, e.descripcion from zint4hwvvzk5xj98.vuelo v  join zint4hwvvzk5xj98.ruta r on v.id_ruta = r.id_ruta join zint4hwvvzk5xj98.estado_vuelo e on v.id_estado= e.id_estado', (err, rows, fields) => {
+    mysqlConnection.query('select v.id_vuelo, v.id_avion, r.id_ruta, r.origen, r.destino, r.precio_base, r.distancia_viaje, r.tiempo_viaje, r.fecha_creacion, e.descripcion from zint4hwvvzk5xj98.vuelo v  join zint4hwvvzk5xj98.ruta r on v.id_ruta = r.id_ruta join zint4hwvvzk5xj98.estado_vuelo e on v.id_estado= e.id_estado where v.id_vuelo = ? and r.id_ruta',
+    [vue.id_vuelo, vue.id_ruta], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
