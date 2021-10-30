@@ -3,7 +3,7 @@ const router = express.Router();
 
 const mysqlConnection = require('../configurations/db-conf');
 
-//POST:/pago RR
+//POST:/pago RR cambio de CVV 
 router.post("/pagos", (req, res) => {
     console.log("Creando pago");
     let est = req.body;
@@ -34,7 +34,7 @@ router.get("/pagos", (req, res) => {
     });
 });
 
-//GET:/pago/:id RR
+//GET:/pago/:id 
 router.get("/pagos/:numero_factura", (req, res) => {
     console.log("Obteniendo pago");
     mysqlConnection.query('Select * from pago where numero_factura = ?', [req.params.numero_factura], (err, rows, fields) => {
@@ -47,7 +47,7 @@ router.get("/pagos/:numero_factura", (req, res) => {
     });
 });
 
-//PUT:/pago/:id RR
+//PUT:/pago/:id 
 router.put("/pagos/:numero_factura", (req, res) => {
     console.log("Actualizando pago");
     let est = req.body;
