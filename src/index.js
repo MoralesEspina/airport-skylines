@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 var cors = require('cors')
-
+const {validateCreate}=require('../src/validators/personas')
 app.use(express.json());
 app.set('port', process.env.PORT || 3000);
 
@@ -18,8 +18,10 @@ app.use(require('./routes/estado_vuelo'));
 app.use(require('./routes/modelo'));
 app.use(require('./routes/pago'));
 app.use(require('./routes/pasajero'));
-app.use(require('./routes/persona'));
+
+app.use(require('./routes/persona',validateCreate));
 app.use(require('./routes/rol'));
+
 app.use(require('./routes/ruta'));
 app.use(require('./routes/usuario'));
 app.use(require('./routes/vuelo'));
