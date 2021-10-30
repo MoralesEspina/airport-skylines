@@ -24,7 +24,7 @@ router.post("/vuelos", (req, res) => {
 //Obtener vuelo
 router.get("/vuelos", (req, res) => {
     console.log("Obteniendo Lista Vuelo");
-    mysqlConnection.query('Select * from vuelo', (err, rows, fields) => {
+    mysqlConnection.query('select v.id_vuelo, v.id_avion, r.id_ruta, r.origen, r.destino, r.precio_base, r.distancia_viaje, r.tiempo_viaje, r.fecha_creacion, e.descripcion from zint4hwvvzk5xj98.vuelo v  join zint4hwvvzk5xj98.ruta r on v.id_ruta = r.id_ruta join zint4hwvvzk5xj98.estado_vuelo e on v.id_estado= e.id_estado', (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
@@ -37,7 +37,7 @@ router.get("/vuelos", (req, res) => {
 //Obtener vuelo por id
 router.get("/vuelos/:id_vuelo", (req, res) => {
     console.log("Obteniendo Vuelo");
-    mysqlConnection.query('Select * from vuelo where id_vuelo = ?', [req.params.id_vuelo], (err, rows, fields) => {
+    mysqlConnection.query('select v.id_vuelo, v.id_avion, r.id_ruta, r.origen, r.destino, r.precio_base, r.distancia_viaje, r.tiempo_viaje, r.fecha_creacion, e.descripcion from zint4hwvvzk5xj98.vuelo v  join zint4hwvvzk5xj98.ruta r on v.id_ruta = r.id_ruta join zint4hwvvzk5xj98.estado_vuelo e on v.id_estado= e.id_estado where id_vuelo = ?', [req.params.id_vuelo], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {

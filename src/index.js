@@ -1,11 +1,12 @@
 const express = require('express');
+var cors = require('cors');
 const app = express();
-var cors = require('cors')
-
 app.use(express.json());
-app.set('port', process.env.PORT || 3000);
 
 app.use(cors());
+
+app.set('port', process.env.PORT || 3000);
+
 app.use(require('./routes/aerolineas'));
 app.use(require('./routes/aeropuerto'));
 app.use(require('./routes/asiento'));
