@@ -8,8 +8,8 @@ router.post("/pagos", (req, res) => {
     console.log("Creando pago");
     let est = req.body;
     console.log(est);
-    mysqlConnection.query('insert into pago (numero_factura, id_boleto, costo_total, Tarjeta_Credito, Nombre_Propietario, Fecha_exp, CVV) values (?,?,?,?,?,?,?)',
-        [est.numero_factura, est.id_boleto, est.costo_total, est.Tarjeta_Credito, est.Nombre_Propietario, est.Fecha_exp, est.CVV], (err, result) => {
+    mysqlConnection.query('insert into pago (numero_factura, id_boleto, costo_total, Tarjeta_Credito, Nombre_Propietario, Fecha_Exp, cvv) values (?,?,?,?,?,?,?)',
+        [est.numero_factura, est.id_boleto, est.costo_total, est.Tarjeta_Credito, est.Nombre_Propietario, est.Fecha_Exp, est.cvv], (err, result) => {
             if (!err) {
                 console.log(result);
 
@@ -52,8 +52,8 @@ router.put("/pagos/:numero_factura", (req, res) => {
     console.log("Actualizando pago");
     let est = req.body;
     console.log(est);
-    mysqlConnection.query('update pago set id_boleto = ?, costo_total = ?, Tarjeta_Credito = ?, Nombre_Propietario = ?, Fecha_Exp = ?, CVV = ? where numero_factura = ?',
-        [est.numero_factura, est.id_boleto, est.costo_total, est.Tarjeta_Credito, est.Nombre_Propietario, est.Fecha_exp, est.CVV], (err, result) => {
+    mysqlConnection.query('update pago set id_boleto = ?, costo_total = ?, Tarjeta_Credito = ?, Nombre_Propietario = ?, Fecha_Exp = ?, cvv = ? where numero_factura = ?',
+        [est.numero_factura, est.id_boleto, est.costo_total, est.Tarjeta_Credito, est.Nombre_Propietario, est.Fecha_exp, est.cvv], (err, result) => {
             if (!err) {
                 console.log(result);
 
