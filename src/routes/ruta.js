@@ -35,8 +35,8 @@ router.post("/rutas", (req, res) => {
     console.log("Creando Rutas");
     let route = req.body;
 
-    mysqlConnection.query('insert into ruta (id_ruta, precio_base, distancia_viaje, tiempo_viaje, fecha_creacion, origen, destino) values (?,?,?,?,?,?,?)',
-        [route.id_ruta, route.precio_base, route.distancia_viaje, route.tiempo_viaje, route.fecha_creacion, route.origen, route.destino], (err, result) => {
+    mysqlConnection.query('insert into ruta (id_ruta, precio_base, distancia_viaje, tiempo_viaje, fecha_creacion, origen, destino) values (?,?,?,?,CURDATE(),?,?)',
+        [route.id_ruta, route.precio_base, route.distancia_viaje, route.tiempo_viaje, route.origen, route.destino], (err, result) => {
             if (!err) {
                 console.log(result);
                 res.status(201).send("Creado Correctamente");
