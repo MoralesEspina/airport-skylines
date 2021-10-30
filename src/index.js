@@ -26,8 +26,10 @@ app.use(require('./routes/vuelo'));
 app.use(require('./routes/cancelacion_boletos'));
 app.use(require('./routes/cancelacion_vuelos'));
 app.use(require('./routes/estado_cancelacion'));
+app.use(require('./routes/vdisponible'));
 app.use(require('./routes/security'));
-app.use(require('./routes/disponible'));
+
+
 
 
 
