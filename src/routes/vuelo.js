@@ -8,8 +8,8 @@ router.post("/vuelos", (req, res) => {
     console.log("Creando Vuelo");
     let est = req.body;
     console.log(est);
-    mysqlConnection.query('insert into vuelo (id_vuelo, id_ruta, id_avion,fecha_hora_salida, id_estado ) values (?,?,?,?,?)',
-        [est.id_vuelo, est.id_ruta, est.id_avion, est.fecha_hora_salida, est.id_estado], (err, result) => {
+    mysqlConnection.query('insert into vuelo (id_vuelo, id_ruta, id_avion, fecha_salida, id_estado ) values (?,?,?,?,?)',
+        [est.id_vuelo, est.id_ruta, est.id_avion, est.fecha_salida, est.id_estado], (err, result) => {
             if (!err) {
                 console.log(result);
 
@@ -52,8 +52,8 @@ router.put("/vuelos/:id_vuelo", (req, res) => {
     console.log("Actualizando Vuelo");
     let est = req.body;
     console.log(est);
-    mysqlConnection.query('update vuelo set id_ruta = ?, id_avion = ?, fecha_hora_salida = ?, id_estado = ? where id_vuelo = ?',
-        [est.id_ruta, est.id_avion, est.fecha_hora_salida,est.id_estado, req.params.id_vuelo], (err, result) => {
+    mysqlConnection.query('update vuelo set id_ruta = ?, id_avion = ?, fecha_salida = ?, id_estado = ? where id_vuelo = ?',
+        [est.id_ruta, est.id_avion, est.fecha_salida,est.id_estado, req.params.id_vuelo], (err, result) => {
             if (!err) {
                 console.log(result);
 
