@@ -22,6 +22,19 @@ router.post("/vuelos", (req, res) => {
 });
 
 //Obtener vuelo
+router.get("/vuelos", (req, res) => {
+    console.log("Obteniendo Lista Vuelo");
+    mysqlConnection.query('Select * from vuelo', (err, rows, fields) => {
+        if (!err) {
+            res.send(rows);
+        } else {
+            console.log(err);
+            res.send('error' + err);
+        }
+    });
+});
+
+//Obtener vuelo
 router.post("/vuelosruta", (req, res) => {
     let vue = req.body;
     console.log(vue);
