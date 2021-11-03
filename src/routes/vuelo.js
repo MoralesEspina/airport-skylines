@@ -34,10 +34,26 @@ router.get("/vuelos", (req, res) => {
     });
 });
 
+//Obtener vuelo
+router.post("/vuelosruta", (req, res) => {
+    let vue = req.body;
+    console.log(vue);
+    console.log("Obteniendo Lista Vuelo");
+    mysqlConnection.query('select v.id_vuelo, v.id_avion, r.id_ruta, r.origen, r.destino, r.precio_base, r.distancia_viaje, r.tiempo_viaje, r.fecha_creacion, e.descripcion from zint4hwvvzk5xj98.vuelo v  join zint4hwvvzk5xj98.ruta r on v.id_ruta = r.id_ruta join zint4hwvvzk5xj98.estado_vuelo e on v.id_estado= e.id_estado where v.id_vuelo = ? and r.id_ruta',
+    [vue.id_vuelo, vue.id_ruta], (err, rows, fields) => {
+        if (!err) {
+            res.send(rows);
+        } else {
+            console.log(err);
+            res.send('error' + err);
+        }
+    });
+});
+
 //Obtener vuelo por id
 router.get("/vuelos/:id_vuelo", (req, res) => {
     console.log("Obteniendo Vuelo");
-    mysqlConnection.query('Select * from vuelo where id_vuelo = ?', [req.params.id_vuelo], (err, rows, fields) => {
+    mysqlConnection.query('select v.id_vuelo, v.id_avion, r.id_ruta, r.origen, r.destino, r.precio_base, r.distancia_viaje, r.tiempo_viaje, r.fecha_creacion, e.descripcion from zint4hwvvzk5xj98.vuelo v  join zint4hwvvzk5xj98.ruta r on v.id_ruta = r.id_ruta join zint4hwvvzk5xj98.estado_vuelo e on v.id_estado= e.id_estado where id_vuelo = ?', [req.params.id_vuelo], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
@@ -80,5 +96,22 @@ router.delete("/vuelos/:id_vuelo", (req, res) => {
             }
         });
 });
+
+router.post("/vuelosruta", (req, res) => {
+    console.log("Obteniendo Vuelo Especifico");
+    let vue = req.body;
+    console.log(vue);
+    mysqlConnection.query('Select id_vuelo from vuelo where id_ruta = ? and id_avion = ? and fecha_salida = ? ',
+        [vue.id_ruta, vue.id_avion, vue.fecha_salida], (err,rows, fields) => {
+            if (!err) {
+                res.status(201).send(rows);
+            } else {
+                console.log(err);
+                res.send('error' + err);
+            }
+        });
+});
+
+
 
 module.exports = router;

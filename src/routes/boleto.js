@@ -24,7 +24,7 @@ router.post("/boletos", (req, res) => {
 //Obtener tabla de boleto
 router.get("/boletos", (req, res) => {
     console.log("Obteniendo Lista Boleto");
-    mysqlConnection.query('Select * from boleto', (err, rows, fields) => {
+    mysqlConnection.query('select b.id_boleto, b.fecha_compra, r.nombres, r.apellidos, b.id_vuelo, c.tipo_clase, c.precio, a.numero, a.letra, e.descripcion from zint4hwvvzk5xj98.boleto b join zint4hwvvzk5xj98.pasajero p on b.id_pasajero= p.id_pasajero join zint4hwvvzk5xj98.persona r on p.id_persona = r.id_persona join zint4hwvvzk5xj98.clase c on b.clase= c.id_clase join zint4hwvvzk5xj98.asiento a on b.num_asiento= a.id_asiento join zint4hwvvzk5xj98.estado_boleto e on b.estado= e.idestado_boleto;', (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
@@ -37,7 +37,7 @@ router.get("/boletos", (req, res) => {
 //Obtener boleto por id
 router.get("/boletos/:id_boleto", (req, res) => {
     console.log("Obteniendo Boleto");
-    mysqlConnection.query('Select * from boleto where id_boleto = ?', [req.params.id_boleto], (err, rows, fields) => {
+    mysqlConnection.query('select b.id_boleto, b.fecha_compra, r.nombres, r.apellidos, b.id_vuelo, c.tipo_clase, c.precio, a.numero, a.letra, e.descripcion from zint4hwvvzk5xj98.boleto b join zint4hwvvzk5xj98.pasajero p on b.id_pasajero= p.id_pasajero join zint4hwvvzk5xj98.persona r on p.id_persona = r.id_persona join zint4hwvvzk5xj98.clase c on b.clase= c.id_clase join zint4hwvvzk5xj98.asiento a on b.num_asiento= a.id_asiento join zint4hwvvzk5xj98.estado_boleto e on b.estado= e.idestado_boleto where id_boleto = ?', [req.params.id_boleto], (err, rows, fields) => {
         if (!err) {
             res.send(rows);
         } else {
