@@ -19,7 +19,6 @@ app.use(require('./routes/estado_vuelo'));
 app.use(require('./routes/modelo'));
 app.use(require('./routes/pago'));
 app.use(require('./routes/pasajero'));
-app.use(require('./routes/persona'));
 app.use(require('./routes/rol'));
 app.use(require('./routes/ruta'));
 app.use(require('./routes/usuario'));
