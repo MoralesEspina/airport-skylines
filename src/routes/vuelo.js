@@ -22,8 +22,8 @@ router.post("/vuelos", (req, res) => {
     console.log("Creando Vuelo");
     let est = req.body;
     console.log(est);
-    mysqlConnection.query('insert into vuelo (id_vuelo, id_ruta, id_avion,fecha_salida, id_estado ) values (?,?,?,?,?)',
-        [est.id_vuelo, est.id_ruta, est.id_avion, est.fecha_salida, est.id_estado], (err, result) => {
+    mysqlConnection.query('insert into vuelo (id_ruta, id_avion,fecha_salida, id_estado ) values (?,?,?,?)',
+        [ est.id_ruta, est.id_avion, est.fecha_salida, est.id_estado], (err, result) => {
             if (!err) {
                 console.log(result);
 
@@ -84,11 +84,11 @@ router.delete("/vuelos/:id_vuelo", (req, res) => {
 });
 
 
-router.post("/vuelosruta2", (req, res) => {
+router.get("/vuelosdisponibles", (req, res) => {
     console.log("Obteniendo Vuelo Especifico");
     let vue = req.body;
     console.log(vue);
-    mysqlConnection.query('Select id_vuelo from vuelo where id_ruta = ? and id_avion = ? and fecha_salida = ? ',
+    mysqlConnection.query('select id_vuelo,origen,destino,id_avion,fecha_salida,descripcion from ruta join vuelo on ruta.id_ruta = vuelo.id_ruta join estado_vuelo on vuelo.id_estado = estado_vuelo.id_estado',
         [vue.id_ruta, vue.id_avion, vue.fecha_salida], (err,rows, fields) => {
             if (!err) {
                 res.status(201).send(rows);
