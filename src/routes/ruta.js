@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { check, validationResult }= require('express-validator');
 const mysqlConnection = require('../configurations/db-conf');
 
 //Ver Rutas
@@ -31,10 +31,16 @@ router.get("/rutas/:id", (req, res) => {
 });
 
 //Crear Ruta
-router.post("/rutas", (req, res) => {
+router.post("/rutas", [check('precio_base', 'es requerido').notEmpty().isDecimal().withMessage('Ingrese solo numeros'), check('distancia_viaje', 'es requerido').notEmpty().isDecimal().withMessage('Ingrese solo numeros'),
+check('tiempo_viaje', 'es requerido').notEmpty(), check('fecha_creacion', 'es requerido').notEmpty().isDate().withMessage('Ingrese una fecha valida formato YYYY/MM/DD'),
+check('origen', 'es requerido').notEmpty().isAlpha().withMessage('solo una palabra'), check('destino', 'es requerido').notEmpty().isAlpha().withMessage('solo una palabra')], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     console.log("Creando Rutas");
     let route = req.body;
-
     mysqlConnection.query('insert into ruta (id_ruta, precio_base, distancia_viaje, tiempo_viaje, fecha_creacion, origen, destino) values (?,?,?,?,CURDATE(),?,?)',
         [route.id_ruta, route.precio_base, route.distancia_viaje, route.tiempo_viaje, route.origen, route.destino], (err, result) => {
             if (!err) {
@@ -45,10 +51,18 @@ router.post("/rutas", (req, res) => {
                 res.send('Error' + err);
             }
         });
+    }
 });
 
 //Actualizar Ruta
-router.put("/rutas/:id", (req, res) => {
+router.put("/rutas/:id", [check('precio_base', 'es requerido').notEmpty().isDecimal().withMessage('Ingrese solo numeros'), check('distancia_viaje', 'es requerido').notEmpty().isDecimal().withMessage('Ingrese solo numeros'),
+check('tiempo_viaje', 'es requerido').notEmpty(), check('fecha_creacion', 'es requerido').notEmpty().isDate().withMessage('Ingrese una fecha valida formato YYYY/MM/DD'),
+check('origen', 'es requerido').notEmpty().isAlpha().withMessage('solo una palabra'), check('destino', 'es requerido').notEmpty().isAlpha().withMessage('solo una palabra')], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     console.log("Actualizando Rutas");
     let route = req.body;
 
@@ -62,6 +76,7 @@ router.put("/rutas/:id", (req, res) => {
                 res.send('error' + err);
             }
         });
+    }
 });
 
 //Eliminar Ruta
