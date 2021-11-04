@@ -14,11 +14,10 @@ check('letra', 'es requerido').notEmpty().isAlpha().withMessage('Ingrese solo un
     console.log("Creando Asiento");
     let est = req.body;
     console.log(est);
-    mysqlConnection.query('insert into asiento (id_asiento, numero, letra ) values (?,?,?)',
-        [est.id_asiento, est.numero, est.letra], (err, result) => {
+    mysqlConnection.query('insert into asiento (numero, letra,tipo_asiento ) values (?,?,?)',
+        [ est.numero, est.letra, est.tipo_asiento], (err, result) => {
             if (!err) {
                 console.log(result);
-
                 res.status(201).send("Asiento Creado Correctamente");
             } else {
                 console.log(err);
@@ -65,7 +64,7 @@ check('letra', 'es requerido').notEmpty().isAlpha().withMessage('Ingrese solo un
     console.log("Actualizando Asiento");
     let est = req.body;
     console.log(est);
-    mysqlConnection.query('update asiento set numero = ?, letra = ? where id_asiento = ?',
+    mysqlConnection.query('update asiento set numero = ?, letra = ?, tipo_asiento = ? where id_asiento = ?',
         [est.numero, est.letra, req.params.id_asiento], (err, result) => {
             if (!err) {
                 console.log(result);
@@ -83,7 +82,7 @@ check('letra', 'es requerido').notEmpty().isAlpha().withMessage('Ingrese solo un
 router.delete("/asientos/:id_asiento", (req, res) => {
     console.log("Eliminando Asiento");
     mysqlConnection.query('delete from asiento where id_asiento = ?',
-        [req.params.id], (err, result) => {
+        [req.params.id_asiento], (err, result) => {
             if (!err) {
                 console.log(result);
 
@@ -95,4 +94,32 @@ router.delete("/asientos/:id_asiento", (req, res) => {
         });
 });
 
+router.post("/asientosocupados", (req, res) => {
+    console.log("Obteniendo Lista Asiento Ocupados");
+    let est = req.body;
+    mysqlConnection.query('Select id_asiento from asiento_ocupado where id_avion = ? and id_vuelo = ?', 
+    [ est.id_avion, est.id_vuelo], (err, rows, fields) => {
+        if (!err) {
+            res.send(rows);
+        } else {
+            console.log(err);
+            res.send('error' + err);
+        }
+    });
+});
+
+router.post("/insertarasientosocupados", (req, res) => {
+    console.log("Insertando Asiento Ocupados");
+    let est = req.body;
+    mysqlConnection.query('insert into asiento_ocupado (id_asiento, id_avion, id_vuelo ) values (?,?,?)', 
+    [est.id_asiento, est.id_avion, est.id_vuelo], (err, rows, fields,result) => {
+        if (!err) {
+            console.log(result);
+            res.status(201).send("Asiento Creado Correctamente");
+        } else {
+            console.log(err);
+            res.send('error' + err);
+        }
+    });
+});
 module.exports = router;
