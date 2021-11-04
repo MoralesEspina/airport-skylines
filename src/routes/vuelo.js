@@ -22,8 +22,8 @@ router.post("/vuelos", (req, res) => {
     console.log("Creando Vuelo");
     let est = req.body;
     console.log(est);
-    mysqlConnection.query('insert into vuelo (id_vuelo, id_ruta, id_avion,fecha_salida, id_estado ) values (?,?,?,?,?)',
-        [est.id_vuelo, est.id_ruta, est.id_avion, est.fecha_salida, est.id_estado], (err, result) => {
+    mysqlConnection.query('insert into vuelo (id_ruta, id_avion,fecha_salida, id_estado ) values (?,?,?,?)',
+        [ est.id_ruta, est.id_avion, est.fecha_salida, est.id_estado], (err, result) => {
             if (!err) {
                 console.log(result);
 
