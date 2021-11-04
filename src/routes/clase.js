@@ -1,25 +1,42 @@
 const express = require('express');
+const { check } = require('express-validator');
 const router = express.Router();
 
 const mysqlConnection = require('../configurations/db-conf');
 
-//POST:/clase RR
-router.post("/clases", (req, res) => {
-    console.log("Creando clase");
-    let est = req.body;
-    console.log(est);
-    mysqlConnection.query('insert into clase (id_clase, tipo_clase, precio) values (?,?,?)',
-        [est.id_clase, est.tipo_clase, est.precio], (err, result) => {
-            if (!err) {
-                console.log(result);
+//POST:/clase validacion
+router.post("/clases", [check('tipo_clase', 'es requerido').notEmpty().isString().withMessage('Ingrece tipo de clase'),
+check('precio', 'es requerido').notEmpty().isInt().withMessage('Agregar precio en números')], (req, res) => {
 
-                res.status(201).send("Creado Correctamente");
-            } else {
-                console.log(err);
-                res.send('error' + err);
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else {
+
+        console.log("Creando clase");
+        let est = req.body;
+        console.log(est);
+        mysqlConnection.query('insert into clase (tipo_clase, precio) values (?,?,?)',
+            [est.id_clase, est.tipo_clase, est.precio], (err, result) => {
+                if (!err) {
+                    console.log(result);
+
+                    res.status(201).send("Creado Correctamente");
+                } else {
+                    console.log(err);
+                    res.send('error' + err);
+                }
             }
-        });
-});
+            );
+
+
+
+
+    }
+}
+);
 
 //GET:/clase RR
 router.get("/clases", (req, res) => {
@@ -48,8 +65,15 @@ router.get("/clases/:id_clase", (req, res) => {
 });
 
 //PUT:/clase/:id RR
-router.put("/clases/:id_clase", (req, res) => {
-    console.log("Actualizando clase ");
+router.put("/clases/:id_clase", [check('tipo_clase', 'es requerido').notEmpty().isString().withMessage('Ingrece tipo de clase'),
+check('precio', 'es requerido').notEmpty().isInt().withMessage('Agregar precio en números')], (req, res) => {
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else {console.log("Actualizando clase ");
     let est = req.body;
     console.log(est);
     mysqlConnection.query('update clase set tipo_clase = ?, precio = ? where id_clase = ?',
@@ -63,6 +87,9 @@ router.put("/clases/:id_clase", (req, res) => {
                 res.send('error' + err);
             }
         });
+
+    }
+    
 });
 
 //DELETE:/clase/id RR

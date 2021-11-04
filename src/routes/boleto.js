@@ -1,24 +1,36 @@
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator');
 
 const mysqlConnection = require('../configurations/db-conf');
 
 //create de boleto
-router.post("/boletos", (req, res) => {
-    console.log("Boleto Creando Boleto");
-    let est = req.body;
-    console.log(est);
-    mysqlConnection.query('insert into boleto (id_boleto, fecha_compra, id_pasajero, id_vuelo, clase, num_asiento, estado ) values (?,?,?,?,?,?,?)',
-        [est.id_boleto, est.fecha_compra, est.id_pasajero, est.id_vuelo, est.clase, est.num_asiento, est.estado], (err, result) => {
-            if (!err) {
-                console.log(result);
+router.post("/boletos", [check('fecha_compra', 'es requerido').notEmpty().isDate().withMessage('Ingrese una fecha valida formato YYYY/MM/DD'),
+check('id_pasajero', 'es requerido').notEmpty().isInt().withMessage('solo números'), check('id_vuelo', 'es requerido').notEmpty().isInt().withMessage('solo números'),
+check('clase', 'es requerido').notEmpty().isInt().withMessage('solo números'), check('num_asiento', 'es requerido').notEmpty().isInt().withMessage('solo números'),
+check('estado', 'es requerido').notEmpty().isInt().withMessage('solo números')], (req, res) => {
+    const errors = validationResult(req);
 
-                res.status(201).send("Boleto Creado Correctamente");
-            } else {
-                console.log(err);
-                res.send('error' + err);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else {
+        let est = req.body;
+        console.log(est);
+        mysqlConnection.query('insert into boleto (fecha_compra, id_pasajero, id_vuelo, clase, num_asiento, estado ) values (?,?,?,?,?,?,?)',
+            [est.fecha_compra, est.id_pasajero, est.id_vuelo, est.clase, est.num_asiento, est.estado], (err, result) => {
+                if (!err) {
+                    console.log(result);
+
+                    res.status(201).send("Boleto Creado Correctamente");
+                } else {
+                    console.log(err);
+                    res.send('error' + err);
+                }
+                       
             }
-        });
+        );
+    }
 });
 
 //Obtener tabla de boleto
@@ -48,8 +60,17 @@ router.get("/boletos/:id_boleto", (req, res) => {
 });
 
 //Actualizacón de boleto
-router.put("/boletos/:id_boleto", (req, res) => {
-    console.log("Actualizando Boleto");
+router.put("/boletos/:id_boleto",  [check('fecha_compra', 'es requerido').notEmpty().isDate().withMessage('Ingrese una fecha valida formato YYYY/MM/DD'),
+check('id_pasajero', 'es requerido').notEmpty().isInt().withMessage('solo números'), check('id_vuelo', 'es requerido').notEmpty().isInt().withMessage('solo números'),
+check('clase', 'es requerido').notEmpty().isInt().withMessage('solo números'), check('num_asiento', 'es requerido').notEmpty().isInt().withMessage('solo números'),
+check('estado', 'es requerido').notEmpty().isInt().withMessage('solo números')], (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else {
+        console.log("Actualizando Boleto");
     let est = req.body;
     console.log(est);
     mysqlConnection.query('update boleto set fecha_compra = ?, id_pasajero = ?, id_vuelo= ?, clase= ?, num_asiento= ?, estado= ? where id_boleto = ?',
@@ -63,6 +84,9 @@ router.put("/boletos/:id_boleto", (req, res) => {
                 res.send('error' + err);
             }
         });
+
+    }
+    
 });
 
 //Borrar boleto
