@@ -8,7 +8,7 @@ router.post("/pasajeros", (req, res) => {
     console.log("Creando pasajero ");
     let est = req.body;
     console.log(est);
-    mysqlConnection.query('insert into pasajero (numero_doc, tipo_doc, nombres, apellidos, fecha_nacimiento, genero, nacionalidad ) values (?,?,?,?,?)',
+    mysqlConnection.query('insert into pasajero (numero_doc, tipo_doc, nombres, apellidos, fecha_nacimiento, genero, nacionalidad ) values (?,?,?,?,?,?,?)',
         [est.numero_doc, est.tipo_doc, est.nombres, est.apellidos, est.fecha_nacimiento, est.genero, est.nacionalidad], (err, result) => {
             if (!err) {
                 console.log(result);
