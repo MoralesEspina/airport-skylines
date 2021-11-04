@@ -3,7 +3,7 @@ const router = express.Router();
 const { check, validationResult }= require('express-validator');
 const mysqlConnection = require('../configurations/db-conf');
 
-//POST:/pasajero RR
+//POST:/pasajero RR validacion
 router.post("/pasajeros",[check('numero_doc', 'es requerido').notEmpty().isNumeric().withMessage('Ingrese solo numeros'), check('tipo_doc', 'es requerido').notEmpty(),
 check('nombres', 'es requerido').notEmpty(),check('apellidos', 'es requerido').notEmpty(),check('fecha_nacimiento', 'es requerido').notEmpty().isDate().withMessage('Ingrese una fecha valida formato YYYY/MM/DD'),
 check('genero', 'es requerido').notEmpty().isAlpha().withMessage('solo una palabra'),check('nacionalidad', 'es requerido').notEmpty().isAlpha().withMessage('solo una palabra')], (req, res) => {

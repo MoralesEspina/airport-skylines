@@ -30,7 +30,7 @@ router.get("/rutas/:id", (req, res) => {
     });
 });
 
-//Crear Ruta
+//Crear Ruta validacion
 router.post("/rutas", [check('precio_base', 'es requerido').notEmpty().isDecimal().withMessage('Ingrese solo numeros'), check('distancia_viaje', 'es requerido').notEmpty().isDecimal().withMessage('Ingrese solo numeros'),
 check('tiempo_viaje', 'es requerido').notEmpty(), check('fecha_creacion', 'es requerido').notEmpty().isDate().withMessage('Ingrese una fecha valida formato YYYY/MM/DD'),
 check('origen', 'es requerido').notEmpty().isAlpha().withMessage('solo una palabra'), check('destino', 'es requerido').notEmpty().isAlpha().withMessage('solo una palabra')], (req, res) => {
