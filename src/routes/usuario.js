@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { check, validationResult }= require('express-validator');
 const mysqlConnection = require('../configurations/db-conf');
 
 //get
@@ -28,11 +28,17 @@ router.get('/usuarios/:id', (req, res) => {
 });
 
 //Crear
-router.post('/usuarios', (req, res) => {
+router.post('/usuarios', [check('rol', 'es requerido').notEmpty().isAlpha().withMessage('solo una palabra'), check('userName', 'es requerido').notEmpty(),
+check('password', 'es requerido').notEmpty(),check('fechaCreacion', 'es requerido').notEmpty().isDate().withMessage('Ingrese una fecha valida formato YYYY/MM/DD')], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     let usu = req.body;
     console.log('Creando usuario')
     mysqlConnection.query('insert into usuario (rol, userName, password, fechaCreacion) values (?,?,?,CURDATE())',
-        [usu.rol, usu.userName, usu.password], (err, result) => {
+        [usu.id_persona, usu.rol, usu.userName, usu.password], (err, result) => {
             if (!err) {
                 res.send('Creado');
             } else {
@@ -40,10 +46,17 @@ router.post('/usuarios', (req, res) => {
                 res.send('Error');
             }
         })
+    }
 });
 
 //Actualizar
-router.put("/usuarios/:id", (req, res) => {
+router.put("/usuarios/:id", [check('rol', 'es requerido').notEmpty().isAlpha().withMessage('solo una palabra'), check('userName', 'es requerido').notEmpty(),
+check('password', 'es requerido').notEmpty(),check('fechaCreacion', 'es requerido').notEmpty().isDate().withMessage('Ingrese una fecha valida formato YYYY/MM/DD')], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     console.log("Actualizando usuario");
     let usu = req.body;
     console.log(usu);
@@ -57,6 +70,7 @@ router.put("/usuarios/:id", (req, res) => {
                 res.send('Error' + err);
             }
         });
+    }
 });
 
 //Eliminar

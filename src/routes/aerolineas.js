@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { check, validationResult }= require('express-validator');
 const mysqlConnection = require('../configurations/db-conf');
 
 /*CRUD-Get*/
@@ -28,7 +28,12 @@ router.get('/aerolineas/:id',(req,res)=>{
     })
 });
 /*CRUD-Insert*/
-router.post('/aerolineas',(req,res)=>{
+router.post('/aerolineas', [check('nombre', 'es requerido').notEmpty()], (req,res)=>{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     console.log('Creando Aerolinea')
     let emp=req.body;
     console.log(emp);
@@ -42,10 +47,16 @@ router.post('/aerolineas',(req,res)=>{
             res.send('Error'+err);
         }
     })
+}
 });
 
 /*CRUD-Update*/
-router.put('/aerolineas/:id',(req,res)=>{
+router.put('/aerolineas/:id',[check('nombre', 'es requerido').notEmpty()], (req,res)=>{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     console.log('Actualizando Aerolinea')
     let emp=req.body;
     mysqlConnection.query('update aerolinea set nombre=? where id_aerolinea=?',
@@ -58,6 +69,7 @@ router.put('/aerolineas/:id',(req,res)=>{
             res.send('Error'+err);
         }
     })
+}
 });
 
 /*CRUD-Delete*/

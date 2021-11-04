@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { check, validationResult }= require('express-validator');
 const mysqlConnection = require('../configurations/db-conf');
 
 /*CRUD-Get*/
@@ -28,7 +28,14 @@ router.get('/aviones/:id',(req,res)=>{
     })
 });
 /*CRUD-Insert*/
-router.post('/aviones',(req,res)=>{
+router.post('/aviones', [check('estado', 'es requerido').notEmpty().isNumeric().withMessage('Ingrese solo numeros'), 
+check('modelo', 'es requerido').notEmpty().isNumeric().withMessage('Ingrese solo numeros'),
+check('aerolinea', 'es requerido').notEmpty().isNumeric().withMessage('Ingrese solo numeros')], (req,res)=>{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     console.log('Creando Avion')
     let emp=req.body;
     console.log(emp);
@@ -42,10 +49,18 @@ router.post('/aviones',(req,res)=>{
             res.send('Error'+err);
         }
     })
+}
 });
 
 /*CRUD-Update*/
-router.put('/aviones/:id',(req,res)=>{
+router.put('/aviones/:id',[check('estado', 'es requerido').notEmpty().isNumeric().withMessage('Ingrese solo numeros'), 
+check('modelo', 'es requerido').notEmpty().isNumeric().withMessage('Ingrese solo numeros'),
+check('aerolinea', 'es requerido').notEmpty().isNumeric().withMessage('Ingrese solo numeros')], (req,res)=>{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     console.log('Actualizando Avion')
     let emp=req.body;
     mysqlConnection.query('update avion set estado=?, modelo=?, aerolinea=? where id_avion=?',
@@ -58,6 +73,7 @@ router.put('/aviones/:id',(req,res)=>{
             res.send('Error'+err);
         }
     })
+}
 });
 
 /*CRUD-Delete*/

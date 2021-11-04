@@ -1,10 +1,16 @@
 const express = require('express');
 const router = express.Router();
-
+const { check, validationResult }= require('express-validator');
 const mysqlConnection = require('../configurations/db-conf');
 
 //create de asientos
-router.post("/asientos", (req, res) => {
+router.post("/asientos", [check('numero', 'es requerido').notEmpty().isNumeric().withMessage('Ingrese solo numeros'), 
+check('letra', 'es requerido').notEmpty().isAlpha().withMessage('Ingrese solo una leta')],(req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     console.log("Creando Asiento");
     let est = req.body;
     console.log(est);
@@ -18,6 +24,7 @@ router.post("/asientos", (req, res) => {
                 res.send('error' + err);
             }
         });
+    }
 });
 
 //Obtención tabla asiento
@@ -47,7 +54,13 @@ router.get("/asientos/:id_asiento", (req, res) => {
 });
 
 //Actualización de asiento
-router.put("/asientos/:id_asiento", (req, res) => {
+router.put("/asientos/:id_asiento", [check('numero', 'es requerido').notEmpty().isNumeric().withMessage('Ingrese solo numeros'), 
+check('letra', 'es requerido').notEmpty().isAlpha().withMessage('Ingrese solo una leta')],(req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     console.log("Actualizando Asiento");
     let est = req.body;
     console.log(est);
@@ -62,6 +75,7 @@ router.put("/asientos/:id_asiento", (req, res) => {
                 res.send('error' + err);
             }
         });
+    }
 });
 
 // Eliminación de asiento

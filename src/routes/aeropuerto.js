@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { check, validationResult }= require('express-validator');
 const mysqlConnection = require('../configurations/db-conf');
 
 //Visualizar Aeropuertos
@@ -31,10 +31,14 @@ router.get("/aeropuertos/:id", (req, res) => {
 });
 
 //Crear Aeropuerto
-router.post("/aeropuertos", (req, res) => {
+router.post("/aeropuertos",[check('iataCode', 'es requerido').notEmpty(),check('ciudad', 'es requerido').notEmpty(),check('pais', 'es requerido').notEmpty()], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     console.log("Creando Aeropuerto");
     let air = req.body;
-
     mysqlConnection.query('insert into aeropuerto (iataCode, ciudad, pais) values (?,?,?)',
         [air.iataCode, air.ciudad, air.pais], (err, result) => {
             if (!err) {
@@ -45,10 +49,16 @@ router.post("/aeropuertos", (req, res) => {
                 res.send('Error' + err);
             }
         });
+    }
 });
 
 //Actualizar Aeropuerto
-router.put("/aeropuertos/:id", (req, res) => {
+router.put("/aeropuertos/:id", [check('iataCode', 'es requerido').notEmpty(),check('ciudad', 'es requerido').notEmpty(),check('pais', 'es requerido').notEmpty()], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json(errors)
+    }
+    else{
     console.log("Actualizando Aeropuerto");
     let air = req.body;
     
@@ -63,6 +73,7 @@ router.put("/aeropuertos/:id", (req, res) => {
                 res.send('error' + err);
             }
         });
+    }
 });
 
 //Eliminar Aeropuerto
