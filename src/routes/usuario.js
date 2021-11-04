@@ -32,7 +32,7 @@ router.post('/usuarios', (req, res) => {
     let usu = req.body;
     console.log('Creando usuario')
     mysqlConnection.query('insert into usuario (rol, userName, password, fechaCreacion) values (?,?,?,CURDATE())',
-        [usu.id_persona, usu.rol, usu.userName, usu.password], (err, result) => {
+        [usu.rol, usu.userName, usu.password], (err, result) => {
             if (!err) {
                 res.send('Creado');
             } else {
