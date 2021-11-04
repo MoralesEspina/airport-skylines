@@ -84,7 +84,7 @@ router.delete("/vuelos/:id_vuelo", (req, res) => {
 });
 
 
-router.post("/vuelosruta", (req, res) => {
+router.post("/vuelosruta2", (req, res) => {
     console.log("Obteniendo Vuelo Especifico");
     let vue = req.body;
     console.log(vue);
